@@ -1,9 +1,11 @@
-package com.iafenvoy.sop.power;
+package com.iafenvoy.sop.power.type;
 
 import com.iafenvoy.neptune.object.SoundUtil;
 import com.iafenvoy.sop.SongsOfPower;
 import com.iafenvoy.sop.item.block.AbstractSongCubeBlock;
-import dev.architectury.registry.registries.RegistrySupplier;
+import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.SongPowerData;
+import com.iafenvoy.sop.power.SongPowerDataHolder;
 import it.unimi.dsi.fastutil.objects.Object2FloatFunction;
 import it.unimi.dsi.fastutil.objects.Object2IntFunction;
 import net.minecraft.item.ItemStack;

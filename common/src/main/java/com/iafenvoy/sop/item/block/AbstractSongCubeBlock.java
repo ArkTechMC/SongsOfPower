@@ -1,7 +1,7 @@
 package com.iafenvoy.sop.item.block;
 
 import com.iafenvoy.sop.item.block.entity.AbstractSongCubeBlockEntity;
-import com.iafenvoy.sop.power.AbstractSongPower;
+import com.iafenvoy.sop.power.type.AbstractSongPower;
 import com.iafenvoy.sop.power.PowerCategory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;

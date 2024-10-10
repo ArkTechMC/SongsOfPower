@@ -2,7 +2,7 @@ package com.iafenvoy.sop.registry;
 
 import com.iafenvoy.sop.particle.SongEffectParticle;
 import com.iafenvoy.sop.render.AggroSphereRenderer;
-import com.iafenvoy.sop.render.SongCubeBlockEntityRenderer;
+import com.iafenvoy.sop.render.block.SongCubeBlockEntityRenderer;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.particle.ParticleProviderRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;

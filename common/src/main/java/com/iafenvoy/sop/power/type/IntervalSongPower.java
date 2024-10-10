@@ -1,6 +1,8 @@
-package com.iafenvoy.sop.power;
+package com.iafenvoy.sop.power.type;
 
 import com.iafenvoy.neptune.util.Timeout;
+import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.SongPowerDataHolder;
 import it.unimi.dsi.fastutil.objects.Object2IntFunction;
 
 public final class IntervalSongPower extends AbstractSongPower<IntervalSongPower> {
@@ -33,13 +35,19 @@ public final class IntervalSongPower extends AbstractSongPower<IntervalSongPower
     protected void applyInternal(SongPowerDataHolder holder) {
         playSound(holder, this.applySound);
         this.apply.accept(holder);
-        if(holder.isCancelled()) return;
+        if (holder.isCancelled()) return;
+        holder.cooldown();
         Timeout.create(this.interval.applyAsInt(holder), this.times.applyAsInt(holder), () -> this.apply.accept(holder));
     }
 
     @Override
     protected PowerType getType() {
         return PowerType.INTERVAL;
+    }
+
+    @Override
+    public int getPrimaryCooldown(SongPowerDataHolder data) {
+        return super.getPrimaryCooldown(data) + this.interval.applyAsInt(data) * this.times.applyAsInt(data);
     }
 
     @Override

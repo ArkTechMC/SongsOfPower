@@ -1,4 +1,7 @@
-package com.iafenvoy.sop.power;
+package com.iafenvoy.sop.power.type;
+
+import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.SongPowerDataHolder;
 
 public final class InstantSongPower extends AbstractSongPower<InstantSongPower> {
     public InstantSongPower(String id, PowerCategory category) {

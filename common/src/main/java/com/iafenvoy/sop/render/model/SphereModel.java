@@ -1,4 +1,4 @@
-package com.iafenvoy.sop.render;
+package com.iafenvoy.sop.render.model;
 
 import com.iafenvoy.sop.SongsOfPower;
 import net.fabricmc.api.EnvType;

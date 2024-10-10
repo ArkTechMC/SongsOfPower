@@ -38,6 +38,10 @@ subprojects {
         }
         maven { url = 'https://jitpack.io' }
         maven { url "https://maven.terraformersmc.com/releases/" }
+        maven {
+            name = "Illusive Soulworks maven"
+            url = "https://maven.theillusivec4.top/"
+        }
     }
 
     dependencies {

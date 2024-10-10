@@ -1,6 +1,7 @@
 package com.iafenvoy.sop.render;
 
 import com.iafenvoy.sop.entity.AggroSphereEntity;
+import com.iafenvoy.sop.render.model.SphereModel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;

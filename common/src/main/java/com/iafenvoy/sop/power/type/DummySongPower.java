@@ -1,4 +1,7 @@
-package com.iafenvoy.sop.power;
+package com.iafenvoy.sop.power.type;
+
+import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.SongPowerDataHolder;
 
 public non-sealed abstract class DummySongPower extends AbstractSongPower<DummySongPower> {
     public static final DummySongPower EMPTY = new DummySongPower("", null) {

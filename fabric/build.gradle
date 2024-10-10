@@ -44,6 +44,8 @@ dependencies {
     modImplementation(include("com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"))
 
     modApi "com.terraformersmc:modmenu:7.2.2"
+
+    modImplementation "dev.emi:trinkets:${trinkets_version}"
 }
 
 processResources {

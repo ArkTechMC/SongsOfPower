@@ -6,6 +6,7 @@ import com.iafenvoy.sop.Static;
 import com.iafenvoy.sop.config.SopConfig;
 import com.iafenvoy.sop.entity.AggroSphereEntity;
 import com.iafenvoy.sop.power.*;
+import com.iafenvoy.sop.power.type.*;
 import com.iafenvoy.sop.util.SopMath;
 import com.iafenvoy.sop.util.WorldUtil;
 import dev.architectury.registry.CreativeTabRegistry;

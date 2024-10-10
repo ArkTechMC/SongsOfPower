@@ -1,12 +1,13 @@
 package com.iafenvoy.sop.item.block.entity;
 
-import com.iafenvoy.sop.power.AbstractSongPower;
-import com.iafenvoy.sop.power.DummySongPower;
+import com.iafenvoy.sop.power.type.AbstractSongPower;
+import com.iafenvoy.sop.power.type.DummySongPower;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public abstract class AbstractSongCubeBlockEntity extends BlockEntity {
     private AbstractSongPower<?> power;
@@ -34,5 +35,11 @@ public abstract class AbstractSongCubeBlockEntity extends BlockEntity {
 
     public AbstractSongPower<?> getPower() {
         return this.power;
+    }
+
+    public static void tick(World world, BlockPos pos, BlockState state, AbstractSongCubeBlockEntity blockEntity){
+        if(!world.isClient) return;
+        //Sound system should only be used on client
+
     }
 }

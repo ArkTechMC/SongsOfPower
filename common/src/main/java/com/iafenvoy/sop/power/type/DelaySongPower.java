@@ -1,6 +1,8 @@
-package com.iafenvoy.sop.power;
+package com.iafenvoy.sop.power.type;
 
 import com.iafenvoy.neptune.util.Timeout;
+import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.SongPowerDataHolder;
 
 public final class DelaySongPower extends AbstractSongPower<DelaySongPower> {
     private int delay = 0;

@@ -2,6 +2,9 @@ package com.iafenvoy.sop.power;
 
 import com.iafenvoy.sop.impl.ComponentManager;
 import com.iafenvoy.sop.item.block.AbstractSongCubeBlock;
+import com.iafenvoy.sop.power.type.AbstractSongPower;
+import com.iafenvoy.sop.power.type.DummySongPower;
+import com.iafenvoy.sop.power.type.PersistSongPower;
 import com.iafenvoy.sop.util.Serializable;
 import com.iafenvoy.sop.util.Tickable;
 import net.minecraft.block.Block;
@@ -48,12 +51,13 @@ public class SongPowerData implements Serializable, Tickable {
 
     @Override
     public void tick() {
-        this.aggressium.tick();
-        this.mobilium.tick();
-        this.protisium.tick();
-        this.supportium.tick();
-        if (this.player.getEntityWorld() instanceof ServerWorld serverWorld)
+        if (this.player.getEntityWorld() instanceof ServerWorld serverWorld) {
+            this.aggressium.tick();
+            this.mobilium.tick();
+            this.protisium.tick();
+            this.supportium.tick();
             PowerMergeHelper.run(this, this.player, serverWorld);
+        }
     }
 
     public void dropAll() {

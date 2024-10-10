@@ -5,6 +5,7 @@ import com.iafenvoy.sop.item.block.AggressiumSongCubeBlock;
 import com.iafenvoy.sop.item.block.MobiliumSongCubeBlock;
 import com.iafenvoy.sop.item.block.ProtisiumSongCubeBlock;
 import com.iafenvoy.sop.item.block.SupportiumSongCubeBlock;
+import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
@@ -25,7 +26,14 @@ public class SopBlocks {
 
     private static <T extends Block> RegistrySupplier<T> register(String id, Supplier<T> block) {
         RegistrySupplier<T> r = REGISTRY.register(id, block);
-        SopItems.REGISTRY.register(id, () -> new BlockItem(r.get(), new Item.Settings().rarity(Rarity.EPIC).maxCount(1).arch$tab(SopItemGroups.MAIN)));
+        SopItems.REGISTRY.register(id, () -> new BlockItem(r.get(), new Item.Settings().rarity(Rarity.EPIC).maxCount(1)));
         return r;
+    }
+
+    public static void init() {
+        CreativeTabRegistry.append(SopItemGroups.MAIN, AGGRESSIUM_SONG);
+        CreativeTabRegistry.append(SopItemGroups.MAIN, MOBILIUM_SONG);
+        CreativeTabRegistry.append(SopItemGroups.MAIN, PROTISIUM_SONG);
+        CreativeTabRegistry.append(SopItemGroups.MAIN, SUPPORTIUM_SONG);
     }
 }

@@ -1,6 +1,8 @@
-package com.iafenvoy.sop.power;
+package com.iafenvoy.sop.power.type;
 
-import dev.architectury.registry.registries.RegistrySupplier;
+import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.SongPowerData;
+import com.iafenvoy.sop.power.SongPowerDataHolder;
 import net.minecraft.sound.SoundEvent;
 import org.jetbrains.annotations.Nullable;
 

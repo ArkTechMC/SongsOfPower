@@ -46,5 +46,37 @@
         "stream": false
       }
     ]
+  },
+  "aggressium": {
+    "sounds": [
+      {
+        "name": "sop:aggressium",
+        "stream": false
+      }
+    ]
+  },
+  "mobilium": {
+    "sounds": [
+      {
+        "name": "sop:mobilium",
+        "stream": false
+      }
+    ]
+  },
+  "protisium": {
+    "sounds": [
+      {
+        "name": "sop:protisium",
+        "stream": false
+      }
+    ]
+  },
+  "supportium": {
+    "sounds": [
+      {
+        "name": "sop:supportium",
+        "stream": false
+      }
+    ]
   }
 }

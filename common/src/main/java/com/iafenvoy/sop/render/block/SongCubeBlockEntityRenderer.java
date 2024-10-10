@@ -1,4 +1,4 @@
-package com.iafenvoy.sop.render;
+package com.iafenvoy.sop.render.block;
 
 import com.iafenvoy.sop.item.block.entity.*;
 import com.iafenvoy.sop.registry.SopBlocks;

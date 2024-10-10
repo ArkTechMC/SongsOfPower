@@ -1,6 +1,8 @@
 package com.iafenvoy.sop.power;
 
 import com.iafenvoy.neptune.util.Color4i;
+import com.iafenvoy.sop.power.type.AbstractSongPower;
+import com.iafenvoy.sop.power.type.DummySongPower;
 
 import java.util.ArrayList;
 import java.util.HashMap;

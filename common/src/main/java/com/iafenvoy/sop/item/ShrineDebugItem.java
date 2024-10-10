@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class ShrineDebugItem extends Item {
     public ShrineDebugItem() {
-        super(new Settings().rarity(Rarity.EPIC).maxCount(1).arch$tab(SopItemGroups.MAIN));
+        super(new Settings().rarity(Rarity.EPIC).maxCount(1));
     }
 
     @Override

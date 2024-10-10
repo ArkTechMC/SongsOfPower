@@ -3,6 +3,7 @@ package com.iafenvoy.sop.registry;
 import com.iafenvoy.sop.SongsOfPower;
 import com.iafenvoy.sop.item.ShrineDebugItem;
 import com.iafenvoy.sop.item.impl.ProtepointShieldItem;
+import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.item.Item;
@@ -19,5 +20,9 @@ public final class SopItems {
 
     private static <T extends Item> RegistrySupplier<T> register(String id, Supplier<T> item) {
         return REGISTRY.register(id, item);
+    }
+
+    public static void init() {
+        CreativeTabRegistry.append(SopItemGroups.MAIN, SHRINE_DEBUG);
     }
 }

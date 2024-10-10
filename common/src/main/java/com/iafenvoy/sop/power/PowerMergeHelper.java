@@ -4,6 +4,7 @@ import com.iafenvoy.neptune.object.DamageUtil;
 import com.iafenvoy.neptune.util.Color4i;
 import com.iafenvoy.sop.item.block.AbstractSongCubeBlock;
 import com.iafenvoy.sop.item.block.entity.AbstractSongCubeBlockEntity;
+import com.iafenvoy.sop.power.type.AbstractSongPower;
 import com.iafenvoy.sop.registry.SopParticles;
 import com.iafenvoy.sop.world.FakeExplosionBehavior;
 import com.iafenvoy.sop.world.ShrineStructureHelper;

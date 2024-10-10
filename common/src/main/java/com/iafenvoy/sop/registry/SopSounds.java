@@ -17,6 +17,11 @@ public final class SopSounds {
     public static final RegistrySupplier<SoundEvent> PROTESPHERE = register("protesphere");
     public static final RegistrySupplier<SoundEvent> PROTESPHERE_UNAPPLY = register("protesphere_unapply");
 
+    public static final RegistrySupplier<SoundEvent> AGGRESSIUM = register("aggressium");
+    public static final RegistrySupplier<SoundEvent> MOBILIUM = register("mobilium");
+    public static final RegistrySupplier<SoundEvent> PROTISIUM = register("protisium");
+    public static final RegistrySupplier<SoundEvent> SUPPORTIUM = register("supportium");
+
     private static RegistrySupplier<SoundEvent> register(String id) {
         return REGISTRY.register(id, () -> SoundEvent.of(Identifier.of(SongsOfPower.MOD_ID, id)));
     }
