@@ -44,7 +44,7 @@ public class PowerMergeHelper {
                         PowerCategory category = songCubeBlock.getCategory();
                         Color4i color = category.getColor();
                         if (mergeData.sneakTick >= 20 && mergeData.sneakTick <= 60)
-                            serverWorld.spawnParticles(SopParticles.SONG_EFFECT.get(), center.getX(), center.getY(), center.getZ(), 0, color.getR(), color.getG(), color.getB(), 1);
+                            serverWorld.spawnParticles(SopParticles.SONG_EFFECT.get(), center.getX(), center.getY() - 0.25, center.getZ(), 0, color.getR(), color.getG(), color.getB(), 1);
                         if (mergeData.sneakTick == 60) {
                             SongPowerData.SinglePowerData d = songPowerData.get(category);
                             AbstractSongPower<?> newPower = blockEntity.getPower();

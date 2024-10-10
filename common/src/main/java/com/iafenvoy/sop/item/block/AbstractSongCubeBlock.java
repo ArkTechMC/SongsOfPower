@@ -1,8 +1,8 @@
 package com.iafenvoy.sop.item.block;
 
 import com.iafenvoy.sop.item.block.entity.AbstractSongCubeBlockEntity;
-import com.iafenvoy.sop.power.type.AbstractSongPower;
 import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.type.AbstractSongPower;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
@@ -40,9 +40,8 @@ public abstract class AbstractSongCubeBlock extends BlockWithEntity {
     @Override
     public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         super.afterBreak(world, player, pos, state, blockEntity, tool);
-        if (blockEntity instanceof AbstractSongCubeBlockEntity songCubeBlockEntity) {
+        if (blockEntity instanceof AbstractSongCubeBlockEntity songCubeBlockEntity)
             dropStack(world, pos, songCubeBlockEntity.getPower().getStack());
-        }
     }
 
     public PowerCategory getCategory() {

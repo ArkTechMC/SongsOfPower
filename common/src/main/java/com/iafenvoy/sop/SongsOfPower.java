@@ -6,6 +6,7 @@ import com.iafenvoy.sop.config.SopConfig;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerData;
 import com.iafenvoy.sop.registry.*;
+import com.iafenvoy.sop.world.sound.ServerSongCubeEntityDataHelper;
 import com.mojang.logging.LogUtils;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,6 +35,7 @@ public class SongsOfPower {
     }
 
     public static void process(){
+        ServerSongCubeEntityDataHelper.init();
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, Static.KEYBINDING_SYNC, (buf, context) -> {
             PlayerEntity player = context.getPlayer();
             PowerCategory type = buf.readEnumConstant(PowerCategory.class);
