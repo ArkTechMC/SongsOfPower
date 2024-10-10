@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "sop",
+  "version": "${version}",
+
+  "name": "Songs Of Power",
+  "description": "Add song abilities from Songs of War Animation.",
+  "authors": [
+    "IAFEnvoy",
+    "HF_ColdWind"
+  ],
+  "contact": {
+    "sources": "https://github.com/ArkTechMC/SongsOfPower"
+  },
+
+  "license": "All Rights Reserved",
+  "icon": "logo.jpg",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.iafenvoy.sop.fabric.SongsOfPowerFabric"
+    ],
+    "client": [
+      "com.iafenvoy.sop.fabric.SongsOfPowerFabricClient"
+    ],
+    "cardinal-components-entity": [
+      "com.iafenvoy.sop.fabric.component.ModComponentEntry"
+    ],
+    "modmenu": [
+      "com.iafenvoy.sop.fabric.ModMenu"
+    ]
+  },
+  "custom": {
+    "cardinal-components": [
+      "sop:song_power"
+    ]
+  },
+  "mixins": [
+    "sop.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "~1.20.1",
+    "neptune": ">=1.2",
+    "jupiter": "*"
+  }
+}

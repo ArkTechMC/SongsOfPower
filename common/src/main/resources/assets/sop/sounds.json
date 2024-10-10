@@ -1,0 +1,50 @@
+{
+  "aggroquake": {
+    "sounds": [
+      {
+        "name": "sop:aggroquake",
+        "stream": false
+      }
+    ]
+  },
+  "aggrosphere": {
+    "sounds": [
+      {
+        "name": "sop:aggrosphere",
+        "stream": false
+      }
+    ]
+  },
+  "mobiliflash": {
+    "sounds": [
+      {
+        "name": "sop:mobiliflash",
+        "stream": false
+      }
+    ]
+  },
+  "protepoint": {
+    "sounds": [
+      {
+        "name": "sop:protepoint",
+        "stream": false
+      }
+    ]
+  },
+  "protesphere": {
+    "sounds": [
+      {
+        "name": "sop:protesphere",
+        "stream": false
+      }
+    ]
+  },
+  "protesphere_unapply": {
+    "sounds": [
+      {
+        "name": "sop:protesphere_unapply",
+        "stream": false
+      }
+    ]
+  }
+}
