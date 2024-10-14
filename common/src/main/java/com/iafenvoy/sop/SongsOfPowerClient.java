@@ -14,6 +14,7 @@ public class SongsOfPowerClient {
 
     public static void process() {
         SopRenderers.registerBlockEntityRenderer();
+        SopRenderers.registerRenderType();
         ClientSongCubeEntityDataHelper.init();
         Static.songCubeSoundManager = new ClientSongCubeSoundManager();
     }

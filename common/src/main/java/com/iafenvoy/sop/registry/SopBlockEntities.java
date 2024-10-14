@@ -13,7 +13,7 @@ import net.minecraft.registry.RegistryKeys;
 
 import java.util.function.Supplier;
 
-public class SopBlockEntities {
+public final class SopBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> REGISTRY = DeferredRegister.create(SongsOfPower.MOD_ID, RegistryKeys.BLOCK_ENTITY_TYPE);
     //Block Entity
     public static final RegistrySupplier<BlockEntityType<AggressiumSongCubeBlockEntity>> AGGRESSIUM_SONG_TYPE = register("aggressium_song", () -> BlockEntityType.Builder.create(AggressiumSongCubeBlockEntity::new, SopBlocks.AGGRESSIUM_SONG.get()).build(null));

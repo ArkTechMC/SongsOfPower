@@ -2,14 +2,16 @@ package com.iafenvoy.sop.registry;
 
 import com.iafenvoy.neptune.object.DamageUtil;
 import com.iafenvoy.neptune.object.EntityUtil;
+import com.iafenvoy.neptune.util.Timeout;
 import com.iafenvoy.sop.Static;
 import com.iafenvoy.sop.config.SopConfig;
 import com.iafenvoy.sop.entity.AggroSphereEntity;
-import com.iafenvoy.sop.power.*;
+import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.type.*;
 import com.iafenvoy.sop.util.SopMath;
 import com.iafenvoy.sop.util.WorldUtil;
 import dev.architectury.registry.CreativeTabRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -21,6 +23,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -118,6 +121,21 @@ public final class SopPowers {
             .onUnapply(holder -> {
                 EntityAttributeInstance instance = holder.getPlayer().getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (instance != null) instance.removeModifier(Static.MOBILIGLIDE_UUID);
+            });
+    public static final InstantSongPower MOBILIBOUNCE = new InstantSongPower("mobilibounce", PowerCategory.MOBILIUM).experimental()
+            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobilibounceExhaustion.getFloatValue())
+            .setPrimaryCooldown(50)
+            .setSecondaryCooldown(50)
+            .onApply(holder -> {
+                PlayerEntity player = holder.getPlayer();
+                World world = holder.getWorld();
+                BlockPos below = player.getBlockPos().down();
+                BlockState state = world.getBlockState(below);
+                if (state.isSolidBlock(world, below) || player.isOnGround()) holder.cancel();
+                world.setBlockState(below, SopBlocks.MOBILIBOUNCE_PLATFORM.get().getDefaultState());
+                player.setVelocity(0, 0, 0);
+                player.velocityModified = true;
+                Timeout.create(100, () -> world.setBlockState(below, state));
             });
     //Protisium
     public static final PersistSongPower PROTESPHERE = new PersistSongPower("protesphere", PowerCategory.PROTISIUM)

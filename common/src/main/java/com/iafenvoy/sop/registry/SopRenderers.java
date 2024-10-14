@@ -6,6 +6,8 @@ import com.iafenvoy.sop.render.block.SongCubeBlockEntityRenderer;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.particle.ParticleProviderRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
+import dev.architectury.registry.client.rendering.RenderTypeRegistry;
+import net.minecraft.client.render.RenderLayer;
 
 public final class SopRenderers {
     public static void registerEntityRenderer() {
@@ -21,5 +23,9 @@ public final class SopRenderers {
         BlockEntityRendererRegistry.register(SopBlockEntities.MOBILIUM_SONG_TYPE.get(), SongCubeBlockEntityRenderer.MobiliumSongCubeBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(SopBlockEntities.PROTISIUM_SONG_TYPE.get(), SongCubeBlockEntityRenderer.ProtisiumSongCubeBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(SopBlockEntities.SUPPORTIUM_SONG_TYPE.get(), SongCubeBlockEntityRenderer.SupportiumSongCubeBlockEntityRenderer::new);
+    }
+
+    public static void registerRenderType() {
+        RenderTypeRegistry.register(RenderLayer.getTranslucent(), SopBlocks.MOBILIBOUNCE_PLATFORM.get());
     }
 }

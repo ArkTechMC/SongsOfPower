@@ -36,7 +36,7 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
-    modImplementation "maven.modrinth:neptune:zMTlhkbC"
+    modImplementation "maven.modrinth:neptune:U4GD4MBP"
     modImplementation "maven.modrinth:jupiter:elRfRGl9"
 
     modApi(include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"))

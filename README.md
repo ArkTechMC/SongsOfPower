@@ -47,6 +47,7 @@ If everything is correct, the song cube will start spawning particles. After an 
 - Mobiliflash: Teleport to the direction you see, has a delay of 10 ticks.
 - Mobiliwings: Enable a fake elytra and into sliding mode.
 - Mobiliglide: Slow falling.
+- Mobilibounce: Generate a fake platform and disappear in 5s. You can jump 3x higher on it.
 
 ### Protisium
 

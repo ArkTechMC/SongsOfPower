@@ -51,6 +51,8 @@ public class SopConfig extends AutoInitConfigContainer {
         public final ConfigDouble mobiliflashSpeed = new ConfigDouble("config.sop.power.mobiliflash.speed", 8, 0, 50);
         public final ConfigDouble mobiliwingsExhaustion = new ConfigDouble("config.sop.power.mobiliwings.exhaustion", 1.0 / 10, 0, Integer.MAX_VALUE);
         public final ConfigDouble mobiliglideExhaustion = new ConfigDouble("config.sop.power.mobiliglide.exhaustion", 2.0 / 10, 0, Integer.MAX_VALUE);
+        public final ConfigDouble mobilibounceExhaustion = new ConfigDouble("config.sop.power.mobilibounce.exhaustion", 0.5, 0, Integer.MAX_VALUE);
+        public final ConfigDouble mobilibounceExistTime = new ConfigDouble("config.sop.power.mobilibounce.exist_time", 0.5, 0, Integer.MAX_VALUE);
 
         public MobiliumPowerConfig() {
             super("mobilium", "config.sop.category.power.mobilium");
