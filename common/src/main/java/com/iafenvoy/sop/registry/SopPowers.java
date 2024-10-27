@@ -1,5 +1,6 @@
 package com.iafenvoy.sop.registry;
 
+import com.iafenvoy.neptune.event.LivingEntityEvents;
 import com.iafenvoy.neptune.object.DamageUtil;
 import com.iafenvoy.neptune.object.EntityUtil;
 import com.iafenvoy.neptune.util.Timeout;
@@ -7,6 +8,7 @@ import com.iafenvoy.sop.Static;
 import com.iafenvoy.sop.config.SopConfig;
 import com.iafenvoy.sop.entity.AggroSphereEntity;
 import com.iafenvoy.sop.power.PowerCategory;
+import com.iafenvoy.sop.power.SongPowerData;
 import com.iafenvoy.sop.power.type.*;
 import com.iafenvoy.sop.util.SopMath;
 import com.iafenvoy.sop.util.WorldUtil;
@@ -39,7 +41,7 @@ public final class SopPowers {
             .setDelay(6)
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggrospherePrimaryCooldown.getIntegerValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggrosphereSecondaryCooldown.getIntegerValue())
-            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggrosphereExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggrosphereExhaustion.getDoubleValue())
             .onApply(holder -> {
                 World world = holder.getWorld();
                 PlayerEntity player = holder.getPlayer();
@@ -57,7 +59,7 @@ public final class SopPowers {
             .setDelay(8)
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggroquakePrimaryCooldown.getIntegerValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggroquakeSecondaryCooldown.getIntegerValue())
-            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggroquakeExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggroquakeExhaustion.getDoubleValue())
             .onApply(holder -> {
                 PlayerEntity player = holder.getPlayer();
                 Vec3d range = new Vec3d(
@@ -66,7 +68,7 @@ public final class SopPowers {
                         SopConfig.INSTANCE.aggressium.aggroquakeRange.getDoubleValue());
                 List<LivingEntity> entities = holder.getWorld().getEntitiesByClass(LivingEntity.class, new Box(player.getPos().add(range), player.getPos().subtract(range)), x -> x != player);
                 for (LivingEntity living : entities) {
-                    Vec3d dir = player.getPos().subtract(living.getPos()).multiply(-0.5);
+                    Vec3d dir = SopMath.reverse(player.getPos().subtract(living.getPos()), SopConfig.INSTANCE.aggressium.aggroquakeRange.getDoubleValue()).multiply(-0.5);
                     living.damage(DamageUtil.build(living, DamageTypes.MOB_ATTACK), SopConfig.INSTANCE.aggressium.aggroquakeDamage.getFloatValue());
                     living.setVelocity(dir.add(0, 0.5, 0));
                     living.velocityModified = true;
@@ -75,7 +77,7 @@ public final class SopPowers {
     public static final InstantSongPower AGGROSHOCK = new InstantSongPower("aggroshock", PowerCategory.AGGRESSIUM).experimental()
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggroshockPrimaryCooldown.getIntegerValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggroshockSecondaryCooldown.getIntegerValue())
-            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggroshockExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggroshockExhaustion.getDoubleValue())
             .onApply(holder -> {
                 if (!(holder.getWorld() instanceof ServerWorld serverWorld)) return;
                 PlayerEntity player = holder.getPlayer();
@@ -86,13 +88,31 @@ public final class SopPowers {
                     EntityUtil.lightening(serverWorld, pos.x, pos.y, pos.z, false);
                 }
             });
+    public static final PersistSongPower AGGROSTORM = new PersistSongPower("aggrostorm", PowerCategory.AGGRESSIUM).experimental()
+            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggrostormExhaustion.getDoubleValue())
+            .onTick(holder -> {
+                PlayerEntity player = holder.getPlayer();
+                Vec3d range = new Vec3d(
+                        SopConfig.INSTANCE.aggressium.aggrostormRange.getDoubleValue(),
+                        SopConfig.INSTANCE.aggressium.aggrostormRange.getDoubleValue(),
+                        SopConfig.INSTANCE.aggressium.aggrostormRange.getDoubleValue());
+                List<LivingEntity> entities = holder.getWorld().getEntitiesByClass(LivingEntity.class, new Box(player.getPos().add(range), player.getPos().subtract(range)), x -> x != player);
+                for (LivingEntity living : entities) {
+                    Vec3d v = player.getPos().subtract(living.getPos());
+                    Vec3d dir = SopMath.reverse(v, SopConfig.INSTANCE.aggressium.aggrostormRange.getDoubleValue()).multiply(SopConfig.INSTANCE.aggressium.aggrostormStrength.getDoubleValue());
+                    if (v.length() <= SopConfig.INSTANCE.aggressium.aggrostormRange.getDoubleValue() / 2)
+                        living.damage(DamageUtil.build(living, DamageTypes.MOB_ATTACK), SopConfig.INSTANCE.aggressium.aggrostormDamage.getFloatValue() / 20);
+                    living.setVelocity(dir);
+                    living.velocityModified = true;
+                }
+            });
     //Mobilium
     public static final DelaySongPower MOBILIFLASH = new DelaySongPower("mobiliflash", PowerCategory.MOBILIUM)
             .setApplySound(SopSounds.MOBILIFLASH)
             .setDelay(20)
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.mobilium.mobiliflashPrimaryCooldown.getIntegerValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.mobilium.mobiliflashSecondaryCooldown.getIntegerValue())
-            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobiliflashExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobiliflashExhaustion.getDoubleValue())
             .onApply(holder -> {
                 World world = holder.getWorld();
                 PlayerEntity player = holder.getPlayer();
@@ -109,7 +129,7 @@ public final class SopPowers {
                 if (player.isOnGround() || player.getAbilities().flying) holder.cancel();
             });
     public static final PersistSongPower MOBILIGLIDE = new PersistSongPower("mobiliglide", PowerCategory.MOBILIUM)
-            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobiliglideExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobiliglideExhaustion.getDoubleValue())
             .onApply(holder -> {//GRAVITY attribute not available before 1.20.5
                 EntityAttributeInstance instance = holder.getPlayer().getAttributes().getCustomInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (instance != null)
@@ -123,7 +143,7 @@ public final class SopPowers {
                 if (instance != null) instance.removeModifier(Static.MOBILIGLIDE_UUID);
             });
     public static final InstantSongPower MOBILIBOUNCE = new InstantSongPower("mobilibounce", PowerCategory.MOBILIUM).experimental()
-            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobilibounceExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobilibounceExhaustion.getDoubleValue())
             .setPrimaryCooldown(50)
             .setSecondaryCooldown(50)
             .onApply(holder -> {
@@ -135,12 +155,12 @@ public final class SopPowers {
                 world.setBlockState(below, SopBlocks.MOBILIBOUNCE_PLATFORM.get().getDefaultState());
                 player.setVelocity(0, 0, 0);
                 player.velocityModified = true;
-                Timeout.create(100, () -> world.setBlockState(below, state));
+                Timeout.create(20 * SopConfig.INSTANCE.mobilium.mobilibounceExistTime.getIntegerValue(), () -> world.setBlockState(below, state));
             });
     //Protisium
     public static final PersistSongPower PROTESPHERE = new PersistSongPower("protesphere", PowerCategory.PROTISIUM)
             .setApplySound(SopSounds.PROTESPHERE)
-            .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protesphereExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protesphereExhaustion.getDoubleValue())
             .onApply(holder -> {
                 EntityAttributeInstance instance = holder.getPlayer().getAttributes().getCustomInstance(EntityAttributes.GENERIC_ARMOR);
                 if (instance != null)
@@ -153,7 +173,7 @@ public final class SopPowers {
             });
     public static final PersistSongPower PROTEPOINT = new PersistSongPower("protepoint", PowerCategory.PROTISIUM)
             .setApplySound(SopSounds.PROTEPOINT)
-            .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protepointExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protepointExhaustion.getDoubleValue())
             .onApply(holder -> {
                 ItemStack stack = new ItemStack(SopItems.PROTEPOINT_SHIELD.get());
                 holder.getPlayer().setStackInHand(Hand.OFF_HAND, stack);
@@ -168,7 +188,7 @@ public final class SopPowers {
             .setTimes(10)
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.protisium.protehealPrimaryCooldown.getIntegerValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.protisium.protehealSecondaryCooldown.getIntegerValue())
-            .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protehealExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protehealExhaustion.getDoubleValue())
             .onApply(holder -> {
                 PlayerEntity player = holder.getPlayer();
                 if (player.getHealth() >= player.getMaxHealth()) {
@@ -177,11 +197,25 @@ public final class SopPowers {
                 }
                 player.heal(1);
             });
+    public static final PersistSongPower PROTEARMOR = new PersistSongPower("protearmor", PowerCategory.PROTISIUM)
+            .setPrimaryCooldown(holder -> SopConfig.INSTANCE.protisium.protearmorPrimaryCooldown.getIntegerValue())
+            .setSecondaryCooldown(holder -> SopConfig.INSTANCE.protisium.protearmorSecondaryCooldown.getIntegerValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protearmorExhaustion.getDoubleValue())
+            .onInit(self -> LivingEntityEvents.DAMAGE.register((entity, source, amount) -> {
+                if (entity instanceof PlayerEntity player) {
+                    SongPowerData data = SongPowerData.byPlayer(player);
+                    if (data.powerEnabled(PowerCategory.PROTISIUM, self)) {
+                        data.get(PowerCategory.PROTISIUM).disable();
+                        return Math.max(amount - SopConfig.INSTANCE.protisium.protearmorMaxReduceDamage.getFloatValue(), 0);
+                    }
+                }
+                return amount;
+            }));
     //Supportium
     public static final InstantSongPower SUPPOROLIFT = new InstantSongPower("supporolift", PowerCategory.SUPPORTIUM)
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.supportium.supporoliftPrimaryCooldown.getIntegerValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.supportium.supporoliftSecondaryCooldown.getIntegerValue())
-            .setExhaustion(holder -> SopConfig.INSTANCE.supportium.supporoliftExhaustion.getFloatValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.supportium.supporoliftExhaustion.getDoubleValue())
             .onApply(holder -> {
                 PlayerEntity player = holder.getPlayer();
                 EntityHitResult result = WorldUtil.raycastEntity(player, SopConfig.INSTANCE.supportium.supporoliftRange.getDoubleValue());
@@ -193,7 +227,9 @@ public final class SopPowers {
             });
 
     public static void init() {
-        for (AbstractSongPower<?> power : AbstractSongPower.POWERS)
+        for (AbstractSongPower<?> power : AbstractSongPower.POWERS) {
+            power.init();
             CreativeTabRegistry.appendStack(SopItemGroups.MAIN, power::getStack);
+        }
     }
 }

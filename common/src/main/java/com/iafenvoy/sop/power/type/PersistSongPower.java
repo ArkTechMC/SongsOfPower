@@ -46,7 +46,7 @@ public final class PersistSongPower extends AbstractSongPower<PersistSongPower> 
     public boolean tick(SongPowerData.SinglePowerData data) {
         SongPowerDataHolder holder = new SongPowerDataHolder(data);
         this.tick.accept(holder);
-        if (!holder.isCancelled()) data.getPlayer().addExhaustion(this.getExhaustion(data) / 20);
+        if (!holder.isCancelled()) data.getPlayer().addExhaustion((float) (this.getExhaustion(data) / 20));
         return holder.isCancelled();
     }
 

@@ -39,6 +39,7 @@ If everything is correct, the song cube will start spawning particles. After an 
 - Aggrosphere: Fire a sphere and damage hit entity or create explosion.
 - Aggroquake: Push entities around you away and damage them.
 - Aggroshock **(Experimental)**: Generate lightnings.
+- Aggrostorm **(Experimental)**: Pull entities to you.
 
 ### Mobilium
 
@@ -56,12 +57,13 @@ If everything is correct, the song cube will start spawning particles. After an 
 - Protesphere **(Recommend AttributeFix)**: Enable a protect shield and reduce 80% damage.
 - Protepoint: Enable a fake shield.
 - Proteheal: Heal 10 times with 1 health each.
+- Protearmor: Add an armor, can reduce up to 20 damage(Configurable) in next damage.
 
 ### Supportium
 
 **HotKey: N**
 
-- Supporolift: Pull a entity you are looking at in 20 blocks.
+- Supporolift: Pull an entity you are looking at in 20 blocks.
 
 ## My other works
 

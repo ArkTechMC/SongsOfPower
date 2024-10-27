@@ -34,7 +34,7 @@ public class SongsOfPower {
         SopPowers.init();
     }
 
-    public static void process(){
+    public static void process() {
         ServerSongCubeEntityDataHelper.init();
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, Static.KEYBINDING_SYNC, (buf, context) -> {
             PlayerEntity player = context.getPlayer();
@@ -43,5 +43,6 @@ public class SongsOfPower {
             if (!player.isSpectator() && data.isEnabled())
                 context.queue(() -> data.get(type).keyPress());
         });
+
     }
 }

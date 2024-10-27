@@ -3,11 +3,12 @@ package com.iafenvoy.sop.power.type;
 import com.iafenvoy.neptune.util.Timeout;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerDataHolder;
-import it.unimi.dsi.fastutil.objects.Object2IntFunction;
+
+import java.util.function.ToIntFunction;
 
 public final class IntervalSongPower extends AbstractSongPower<IntervalSongPower> {
-    private Object2IntFunction<SongPowerDataHolder> times = data -> 0;
-    private Object2IntFunction<SongPowerDataHolder> interval = data -> 0;
+    private ToIntFunction<SongPowerDataHolder> times = data -> 0;
+    private ToIntFunction<SongPowerDataHolder> interval = data -> 0;
 
     public IntervalSongPower(String id, PowerCategory category) {
         super(id, category);
@@ -17,7 +18,7 @@ public final class IntervalSongPower extends AbstractSongPower<IntervalSongPower
         return this.setInterval(data -> interval);
     }
 
-    public IntervalSongPower setInterval(Object2IntFunction<SongPowerDataHolder> interval) {
+    public IntervalSongPower setInterval(ToIntFunction<SongPowerDataHolder> interval) {
         this.interval = interval;
         return this;
     }
@@ -26,7 +27,7 @@ public final class IntervalSongPower extends AbstractSongPower<IntervalSongPower
         return this.setTimes(data -> times);
     }
 
-    public IntervalSongPower setTimes(Object2IntFunction<SongPowerDataHolder> times) {
+    public IntervalSongPower setTimes(ToIntFunction<SongPowerDataHolder> times) {
         this.times = times;
         return this;
     }

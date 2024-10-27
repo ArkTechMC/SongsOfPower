@@ -1,5 +1,6 @@
 package com.iafenvoy.sop.power;
 
+import com.iafenvoy.sop.SongsOfPower;
 import com.iafenvoy.sop.impl.ComponentManager;
 import com.iafenvoy.sop.item.block.AbstractSongCubeBlock;
 import com.iafenvoy.sop.power.type.AbstractSongPower;
@@ -12,6 +13,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
 import java.util.HashMap;
@@ -25,6 +28,7 @@ public class SongPowerData implements Serializable, Tickable {
     private final SinglePowerData mobilium = new SinglePowerData(this, PowerCategory.MOBILIUM);
     private final SinglePowerData protisium = new SinglePowerData(this, PowerCategory.PROTISIUM);
     private final SinglePowerData supportium = new SinglePowerData(this, PowerCategory.SUPPORTIUM);
+    private final Map<String, ItemStack> itemCache = new HashMap<>();
     private boolean dirty = false;
 
     public SongPowerData(PlayerEntity player) {
@@ -94,17 +98,37 @@ public class SongPowerData implements Serializable, Tickable {
         this.setEnabled(false);
     }
 
-    public SinglePowerData get(PowerCategory type) {
-        return this.byType.get(type);
+    public SinglePowerData get(PowerCategory category) {
+        return this.byType.get(category);
     }
 
-    public boolean powerEnabled(PowerCategory type, AbstractSongPower<?> power) {
-        SinglePowerData data = this.get(type);
-        return data.hasPower() && data.isEnabled() && data.getActivePower() == power;
+    public boolean powerEnabled(PowerCategory category, AbstractSongPower<?> power) {
+        SinglePowerData data = this.get(category);
+        return data.hasPower() && data.getActivePower() == power && data.isEnabled();
+    }
+
+    public Map<String, ItemStack> getItemCache() {
+        return this.itemCache;
+    }
+
+    public void disableAllPower() {
+        this.aggressium.disable();
+        this.mobilium.disable();
+        this.protisium.disable();
+        this.supportium.disable();
     }
 
     public static SongPowerData byPlayer(PlayerEntity player) {
         return ComponentManager.getSongPowerData(player);
+    }
+
+    public static void stop(MinecraftServer server) {//Song power cache will not save to disk, so we need to clear them
+        for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+            SongPowerData data = byPlayer(player);
+            data.disableAllPower();
+            if (!data.itemCache.isEmpty())
+                SongsOfPower.LOGGER.warn("Item cache on player {} still have {} item(s) left!", player.getGameProfile().getName(), data.itemCache.size());
+        }
     }
 
     public static class SinglePowerData implements Serializable, Tickable {
@@ -166,7 +190,7 @@ public class SongPowerData implements Serializable, Tickable {
                 if (this.activePower.isPersist()) this.enable();
                 else {
                     if (this.getState() == State.RECOVER) {
-                        this.getPlayer().addExhaustion(this.activePower.getExhaustion(this));
+                        this.getPlayer().addExhaustion((float) this.activePower.getExhaustion(this));
                         this.secondaryCooldown = 0;
                     }
                     if (this.getState() == State.ALLOW) this.activePower.apply(this);

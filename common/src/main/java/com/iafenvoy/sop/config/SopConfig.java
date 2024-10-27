@@ -32,12 +32,16 @@ public class SopConfig extends AutoInitConfigContainer {
         public final ConfigInteger aggroquakePrimaryCooldown = new ConfigInteger("config.sop.power.aggroquake.cooldown.primary", 300, 0, Integer.MAX_VALUE);
         public final ConfigInteger aggroquakeSecondaryCooldown = new ConfigInteger("config.sop.power.aggroquake.cooldown.secondary", 200, 0, Integer.MAX_VALUE);
         public final ConfigDouble aggroquakeExhaustion = new ConfigDouble("config.sop.power.aggroquake.exhaustion", 4, 0, Integer.MAX_VALUE);
-        public final ConfigDouble aggroquakeRange = new ConfigDouble("config.sop.power.aggroquake.range", 8, 0, Integer.MAX_VALUE);
+        public final ConfigDouble aggroquakeRange = new ConfigDouble("config.sop.power.aggroquake.range", 10, 0, Integer.MAX_VALUE);
         public final ConfigDouble aggroquakeDamage = new ConfigDouble("config.sop.power.aggroquake.damage", 5, 0, Integer.MAX_VALUE);
         public final ConfigInteger aggroshockPrimaryCooldown = new ConfigInteger("config.sop.power.aggroshock.cooldown.primary", 300, 0, Integer.MAX_VALUE);
         public final ConfigInteger aggroshockSecondaryCooldown = new ConfigInteger("config.sop.power.aggroshock.cooldown.secondary", 300, 0, Integer.MAX_VALUE);
         public final ConfigDouble aggroshockExhaustion = new ConfigDouble("config.sop.power.aggroshock.exhaustion", 4, 0, Integer.MAX_VALUE);
         public final ConfigInteger aggroshockDistance = new ConfigInteger("config.sop.power.aggroshock.distance", 8, 0, Integer.MAX_VALUE);
+        public final ConfigDouble aggrostormExhaustion = new ConfigDouble("config.sop.power.aggrostorm.exhaustion", 4, 0, Integer.MAX_VALUE);
+        public final ConfigDouble aggrostormStrength = new ConfigDouble("config.sop.power.aggrostorm.strength", 0.02, 0, Integer.MAX_VALUE);
+        public final ConfigDouble aggrostormRange = new ConfigDouble("config.sop.power.aggrostorm.range", 15, 0, Integer.MAX_VALUE);
+        public final ConfigDouble aggrostormDamage = new ConfigDouble("config.sop.power.aggrostorm.damage", 1, 0, Integer.MAX_VALUE);
 
         public AggressiumPowerConfig() {
             super("aggressium", "config.sop.category.power.aggressium");
@@ -52,7 +56,7 @@ public class SopConfig extends AutoInitConfigContainer {
         public final ConfigDouble mobiliwingsExhaustion = new ConfigDouble("config.sop.power.mobiliwings.exhaustion", 1.0 / 10, 0, Integer.MAX_VALUE);
         public final ConfigDouble mobiliglideExhaustion = new ConfigDouble("config.sop.power.mobiliglide.exhaustion", 2.0 / 10, 0, Integer.MAX_VALUE);
         public final ConfigDouble mobilibounceExhaustion = new ConfigDouble("config.sop.power.mobilibounce.exhaustion", 0.5, 0, Integer.MAX_VALUE);
-        public final ConfigDouble mobilibounceExistTime = new ConfigDouble("config.sop.power.mobilibounce.exist_time", 0.5, 0, Integer.MAX_VALUE);
+        public final ConfigInteger mobilibounceExistTime = new ConfigInteger("config.sop.power.mobilibounce.exist_time", 5, 0, Integer.MAX_VALUE);
 
         public MobiliumPowerConfig() {
             super("mobilium", "config.sop.category.power.mobilium");
@@ -65,6 +69,10 @@ public class SopConfig extends AutoInitConfigContainer {
         public final ConfigInteger protehealPrimaryCooldown = new ConfigInteger("config.sop.power.proteheal.cooldown.primary", 100, 0, Integer.MAX_VALUE);
         public final ConfigInteger protehealSecondaryCooldown = new ConfigInteger("config.sop.power.proteheal.cooldown.secondary", 200, 0, Integer.MAX_VALUE);
         public final ConfigDouble protehealExhaustion = new ConfigDouble("config.sop.power.proteheal.exhaustion", 2, 0, Integer.MAX_VALUE);
+        public final ConfigInteger protearmorPrimaryCooldown = new ConfigInteger("config.sop.power.protearmor.cooldown.primary", 40, 0, Integer.MAX_VALUE);
+        public final ConfigInteger protearmorSecondaryCooldown = new ConfigInteger("config.sop.power.protearmor.cooldown.secondary", 80, 0, Integer.MAX_VALUE);
+        public final ConfigDouble protearmorExhaustion = new ConfigDouble("config.sop.power.protearmor.exhaustion", 2.0 / 10, 0, Integer.MAX_VALUE);
+        public final ConfigDouble protearmorMaxReduceDamage = new ConfigDouble("config.sop.power.protearmor.maxReduceDamage", 20, 0, Integer.MAX_VALUE);
 
         public ProtisiumPowerConfig() {
             super("protisium", "config.sop.category.power.protisium");

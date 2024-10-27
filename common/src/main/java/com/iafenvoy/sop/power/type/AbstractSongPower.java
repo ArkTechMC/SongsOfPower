@@ -6,8 +6,6 @@ import com.iafenvoy.sop.item.block.AbstractSongCubeBlock;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerData;
 import com.iafenvoy.sop.power.SongPowerDataHolder;
-import it.unimi.dsi.fastutil.objects.Object2FloatFunction;
-import it.unimi.dsi.fastutil.objects.Object2IntFunction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvent;
@@ -20,14 +18,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
 
 public sealed abstract class AbstractSongPower<T extends AbstractSongPower<T>> permits DelaySongPower, DummySongPower, InstantSongPower, IntervalSongPower, PersistSongPower {
     public static final List<AbstractSongPower<?>> POWERS = new ArrayList<>();
     public static final Map<String, AbstractSongPower<?>> BY_ID = new HashMap<>();
     private final String id;
     private final PowerCategory category;
-    private Object2IntFunction<SongPowerDataHolder> primaryCooldownSupplier = data -> 0, secondaryCooldownSupplier = data -> 0;
-    private Object2FloatFunction<SongPowerDataHolder> exhaustion = data -> 0;
+    private Consumer<AbstractSongPower<?>> init = self -> {
+    };
+    private ToIntFunction<SongPowerDataHolder> primaryCooldownSupplier = data -> 0, secondaryCooldownSupplier = data -> 0;
+    private ToDoubleFunction<SongPowerDataHolder> exhaustion = data -> 0;
     protected Consumer<SongPowerDataHolder> apply = holder -> {
     };
     @Nullable
@@ -63,6 +65,15 @@ public sealed abstract class AbstractSongPower<T extends AbstractSongPower<T>> p
         return new Identifier(SongsOfPower.MOD_ID, "textures/power/" + this.id + ".png");
     }
 
+    public T onInit(Consumer<AbstractSongPower<?>> init) {
+        this.init = init;
+        return this.get();
+    }
+
+    public void init() {
+        this.init.accept(this);
+    }
+
     public T onApply(Consumer<SongPowerDataHolder> apply) {
         this.apply = apply;
         return this.get();
@@ -85,7 +96,7 @@ public sealed abstract class AbstractSongPower<T extends AbstractSongPower<T>> p
         return this.setPrimaryCooldown(data -> ticks);
     }
 
-    public T setPrimaryCooldown(Object2IntFunction<SongPowerDataHolder> supplier) {
+    public T setPrimaryCooldown(ToIntFunction<SongPowerDataHolder> supplier) {
         this.primaryCooldownSupplier = supplier;
         return this.get();
     }
@@ -102,24 +113,24 @@ public sealed abstract class AbstractSongPower<T extends AbstractSongPower<T>> p
         return this.setSecondaryCooldown(data -> ticks);
     }
 
-    public T setSecondaryCooldown(Object2IntFunction<SongPowerDataHolder> supplier) {
+    public T setSecondaryCooldown(ToIntFunction<SongPowerDataHolder> supplier) {
         this.secondaryCooldownSupplier = supplier;
         return this.get();
     }
 
-    public float getExhaustion(SongPowerData.SinglePowerData data) {
+    public double getExhaustion(SongPowerData.SinglePowerData data) {
         return this.getExhaustion(new SongPowerDataHolder(data));
     }
 
-    public float getExhaustion(SongPowerDataHolder data) {
-        return this.exhaustion.apply(data);
+    public double getExhaustion(SongPowerDataHolder data) {
+        return this.exhaustion.applyAsDouble(data);
     }
 
     public T setExhaustion(float exhaustion) {
         return this.setExhaustion(data -> exhaustion);
     }
 
-    public T setExhaustion(Object2FloatFunction<SongPowerDataHolder> exhaustion) {
+    public T setExhaustion(ToDoubleFunction<SongPowerDataHolder> exhaustion) {
         this.exhaustion = exhaustion;
         return this.get();
     }

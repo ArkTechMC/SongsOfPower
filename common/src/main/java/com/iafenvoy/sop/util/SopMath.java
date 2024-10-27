@@ -25,4 +25,9 @@ public class SopMath {
     public static Vec3d toUnit(Vec3d origin) {
         return origin.multiply(1 / origin.length());
     }
+
+    public static Vec3d reverse(Vec3d origin, double distance) {
+        double newLength = distance - origin.length();
+        return toUnit(origin).multiply(newLength > 0 ? newLength : 0);
+    }
 }
