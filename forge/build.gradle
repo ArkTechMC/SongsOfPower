@@ -40,7 +40,7 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 
     modImplementation "maven.modrinth:neptune:mFXgjAcu"
-    modImplementation "maven.modrinth:jupiter:5WrVm4v6"
+    modImplementation "maven.modrinth:jupiter:OKvSISC2"
 
     modImplementation "top.theillusivec4.curios:curios-forge:${curios_version}"
 }

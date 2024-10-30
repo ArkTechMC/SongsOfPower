@@ -1,6 +1,6 @@
 package com.iafenvoy.sop.fabric;
 
-import com.iafenvoy.jupiter.screen.ConfigSelectScreen;
+import com.iafenvoy.jupiter.render.screen.ConfigSelectScreen;
 import com.iafenvoy.sop.config.SopConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

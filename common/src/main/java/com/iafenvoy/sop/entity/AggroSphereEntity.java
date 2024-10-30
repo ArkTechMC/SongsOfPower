@@ -31,7 +31,7 @@ public class AggroSphereEntity extends SopProjectileEntity {
         }
         LivingEntity target = this.getEntityWorld().getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, null, this.getX(), this.getY(), this.getZ(), new Box(this.getPos().add(1, 1, 1), this.getPos().subtract(1, 1, 1)));
         if (target != null) {
-            float damage = SopConfig.INSTANCE.aggressium.aggrosphereDamage.getFloatValue();
+            float damage = SopConfig.INSTANCE.aggressium.aggrosphereDamage.getValue().floatValue();
             ServerPlayerEntity attacker = this.getOwner() instanceof ServerPlayerEntity player ? player : null;
             if (target.getMainHandStack().isOf(Items.SHIELD) && target.isUsingItem())
                 target.getMainHandStack().damage((int) this.transformDamage(damage), target.getRandom(), attacker);

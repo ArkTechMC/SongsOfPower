@@ -1,7 +1,7 @@
 package com.iafenvoy.sop;
 
+import com.iafenvoy.jupiter.ConfigManager;
 import com.iafenvoy.jupiter.ServerConfigManager;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import com.iafenvoy.sop.config.SopConfig;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerData;

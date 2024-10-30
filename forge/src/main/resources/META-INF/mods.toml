@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.sop]]
 modId = "jupiter"
 mandatory = true
-versionRange = "[0,)"
+versionRange = "[2.0-alpha1,)"
 ordering = "NONE"
 side = "BOTH"
 
