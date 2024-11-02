@@ -1,6 +1,7 @@
 package com.iafenvoy.sop.registry;
 
 import com.iafenvoy.sop.particle.SongEffectParticle;
+import com.iafenvoy.sop.render.AggroDetonateRenderer;
 import com.iafenvoy.sop.render.AggroSphereRenderer;
 import com.iafenvoy.sop.render.block.SongCubeBlockEntityRenderer;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.client.render.RenderLayer;
 public final class SopRenderers {
     public static void registerEntityRenderer() {
         EntityRendererRegistry.register(SopEntities.AGGRO_SPHERE, AggroSphereRenderer::new);
+        EntityRendererRegistry.register(SopEntities.AGGRO_DETONATE, AggroDetonateRenderer::new);
     }
 
     public static void registerParticleRenderer() {

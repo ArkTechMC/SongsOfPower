@@ -12,5 +12,5 @@ dependencies {
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
     modImplementation "maven.modrinth:neptune:U4GD4MBP"
-    modImplementation "maven.modrinth:jupiter:FEwp99OV"
+    modImplementation "maven.modrinth:jupiter:9x4S3Mzf"
 }

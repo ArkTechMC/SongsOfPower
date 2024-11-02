@@ -1,6 +1,5 @@
 package com.iafenvoy.sop.render.model;
 
-import com.iafenvoy.sop.SongsOfPower;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
@@ -8,19 +7,16 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class SphereModel<T extends Entity> extends EntityModel<T> {
-    public static final Identifier WHITE_TEXTURE = new Identifier(SongsOfPower.MOD_ID, "textures/white.png");
-    private final ModelPart gaping_void;
+    private final ModelPart sphere;
 
     public SphereModel(ModelPart root) {
-        super();
-        this.gaping_void = root.getChild("sphere");
+        this.sphere = root.getChild("sphere");
     }
 
-    public static TexturedModelData createBodyLayer() {
+    public static TexturedModelData getTexturedModelData() {
         ModelData meshdefinition = new ModelData();
         ModelPartData partdefinition = meshdefinition.getRoot();
         ModelPartData sphere = partdefinition.addChild("sphere", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 16.0F, 0.0F));
@@ -202,6 +198,6 @@ public class SphereModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void render(MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.gaping_void.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.sphere.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

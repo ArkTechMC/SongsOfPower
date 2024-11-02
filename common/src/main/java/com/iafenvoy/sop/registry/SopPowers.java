@@ -6,6 +6,7 @@ import com.iafenvoy.neptune.object.EntityUtil;
 import com.iafenvoy.neptune.util.Timeout;
 import com.iafenvoy.sop.Static;
 import com.iafenvoy.sop.config.SopConfig;
+import com.iafenvoy.sop.entity.AggroDetonateEntity;
 import com.iafenvoy.sop.entity.AggroSphereEntity;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerData;
@@ -48,7 +49,7 @@ public final class SopPowers {
                 AggroSphereEntity aggroSphere = SopEntities.AGGRO_SPHERE.get().create(world);
                 if (aggroSphere != null) {
                     final Vec3d dir = SopMath.getRotationVectorUnit(player.getPitch(), player.getHeadYaw());
-                    aggroSphere.refreshPositionAndAngles(player.getX(), (player.getY() + 1), player.getZ(), 0, 0);
+                    aggroSphere.refreshPositionAndAngles(player.getX(), player.getY() + 1, player.getZ(), 0, 0);
                     aggroSphere.setVelocity(dir.multiply(SopConfig.INSTANCE.aggressium.aggrosphereSpeed.getValue()));
                     holder.processProjectile(aggroSphere);
                     world.spawnEntity(aggroSphere);
@@ -62,13 +63,11 @@ public final class SopPowers {
             .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggroquakeExhaustion.getValue())
             .onApply(holder -> {
                 PlayerEntity player = holder.getPlayer();
-                Vec3d range = new Vec3d(
-                        SopConfig.INSTANCE.aggressium.aggroquakeRange.getValue(),
-                        SopConfig.INSTANCE.aggressium.aggroquakeRange.getValue(),
-                        SopConfig.INSTANCE.aggressium.aggroquakeRange.getValue());
+                double r = SopConfig.INSTANCE.aggressium.aggroquakeRange.getValue();
+                Vec3d range = new Vec3d(r, r, r);
                 List<LivingEntity> entities = holder.getWorld().getEntitiesByClass(LivingEntity.class, new Box(player.getPos().add(range), player.getPos().subtract(range)), x -> x != player);
                 for (LivingEntity living : entities) {
-                    Vec3d dir = SopMath.reverse(player.getPos().subtract(living.getPos()), SopConfig.INSTANCE.aggressium.aggroquakeRange.getValue()).multiply(-0.5);
+                    Vec3d dir = SopMath.reverse(player.getPos().subtract(living.getPos()), r).multiply(-0.5);
                     living.damage(DamageUtil.build(living, DamageTypes.MOB_ATTACK), SopConfig.INSTANCE.aggressium.aggroquakeDamage.getValue().floatValue());
                     living.setVelocity(dir.add(0, 0.5, 0));
                     living.velocityModified = true;
@@ -92,18 +91,33 @@ public final class SopPowers {
             .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggrostormExhaustion.getValue())
             .onTick(holder -> {
                 PlayerEntity player = holder.getPlayer();
-                Vec3d range = new Vec3d(
-                        SopConfig.INSTANCE.aggressium.aggrostormRange.getValue(),
-                        SopConfig.INSTANCE.aggressium.aggrostormRange.getValue(),
-                        SopConfig.INSTANCE.aggressium.aggrostormRange.getValue());
+                double r = SopConfig.INSTANCE.aggressium.aggrostormRange.getValue();
+                Vec3d range = new Vec3d(r, r, r);
                 List<LivingEntity> entities = holder.getWorld().getEntitiesByClass(LivingEntity.class, new Box(player.getPos().add(range), player.getPos().subtract(range)), x -> x != player);
                 for (LivingEntity living : entities) {
                     Vec3d v = player.getPos().subtract(living.getPos());
-                    Vec3d dir = SopMath.reverse(v, SopConfig.INSTANCE.aggressium.aggrostormRange.getValue()).multiply(SopConfig.INSTANCE.aggressium.aggrostormStrength.getValue());
-                    if (v.length() <= SopConfig.INSTANCE.aggressium.aggrostormRange.getValue() / 2)
+                    Vec3d dir = SopMath.reverse(v, r).multiply(SopConfig.INSTANCE.aggressium.aggrostormStrength.getValue());
+                    if (v.length() <= r / 2)
                         living.damage(DamageUtil.build(living, DamageTypes.MOB_ATTACK), SopConfig.INSTANCE.aggressium.aggrostormDamage.getValue().floatValue() / 20);
                     living.setVelocity(dir);
                     living.velocityModified = true;
+                }
+            });
+    public static final InstantSongPower AGGRODETONATE = new InstantSongPower("aggrodetonate", PowerCategory.AGGRESSIUM)
+            .setPrimaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggrodetonatePrimaryCooldown.getValue())
+            .setSecondaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggrodetonateSecondaryCooldown.getValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggrodetonateExhaustion.getValue())
+            .onApply(holder -> {
+                World world = holder.getWorld();
+                PlayerEntity player = holder.getPlayer();
+                AggroDetonateEntity aggroDetonate = SopEntities.AGGRO_DETONATE.get().create(world);
+                if (aggroDetonate != null) {
+                    final Vec3d dir = SopMath.getRotationVectorUnit(player.getPitch(), player.getHeadYaw());
+                    aggroDetonate.refreshPositionAndAngles(player.getX(), player.getY() + 1, player.getZ(), 0, 0);
+                    aggroDetonate.setPersistAngle(player.headYaw, player.getPitch());
+                    aggroDetonate.setVelocity(dir.multiply(SopConfig.INSTANCE.aggressium.aggrodetonateSpeed.getValue()));
+                    holder.processProjectile(aggroDetonate);
+                    world.spawnEntity(aggroDetonate);
                 }
             });
     //Mobilium
@@ -143,19 +157,20 @@ public final class SopPowers {
                 if (instance != null) instance.removeModifier(Static.MOBILIGLIDE_UUID);
             });
     public static final InstantSongPower MOBILIBOUNCE = new InstantSongPower("mobilibounce", PowerCategory.MOBILIUM).experimental()
+            .setApplySound(SopSounds.MOBILIBOUNCE)
+            .setPrimaryCooldown(holder -> SopConfig.INSTANCE.mobilium.mobilibouncePrimaryCooldown.getValue())
+            .setSecondaryCooldown(holder -> SopConfig.INSTANCE.mobilium.mobilibounceSecondaryCooldown.getValue())
             .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobilibounceExhaustion.getValue())
-            .setPrimaryCooldown(50)
-            .setSecondaryCooldown(50)
             .onApply(holder -> {
                 PlayerEntity player = holder.getPlayer();
                 World world = holder.getWorld();
                 BlockPos below = player.getBlockPos().down();
                 BlockState state = world.getBlockState(below);
                 if (state.isSolidBlock(world, below) || player.isOnGround()) holder.cancel();
-                world.setBlockState(below, SopBlocks.MOBILIBOUNCE_PLATFORM.get().getDefaultState());
+                world.setBlockState(below, SopBlocks.MOBILIBOUNCE_PLATFORM.get().getDefaultState(), 2, 0);
                 player.setVelocity(0, 0, 0);
                 player.velocityModified = true;
-                Timeout.create(20 * SopConfig.INSTANCE.mobilium.mobilibounceExistTime.getValue(), () -> world.setBlockState(below, state));
+                Timeout.create(20 * SopConfig.INSTANCE.mobilium.mobilibounceExistTime.getValue(), () -> world.setBlockState(below, state, 2, 0));
             });
     //Protisium
     public static final PersistSongPower PROTESPHERE = new PersistSongPower("protesphere", PowerCategory.PROTISIUM)
@@ -198,6 +213,8 @@ public final class SopPowers {
                 player.heal(1);
             });
     public static final PersistSongPower PROTEARMOR = new PersistSongPower("protearmor", PowerCategory.PROTISIUM)
+            .setApplySound(SopSounds.PROTEARMOR)
+            .setUnapplySound(SopSounds.PROTEARMOR_UNAPPLY)
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.protisium.protearmorPrimaryCooldown.getValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.protisium.protearmorSecondaryCooldown.getValue())
             .setExhaustion(holder -> SopConfig.INSTANCE.protisium.protearmorExhaustion.getValue())

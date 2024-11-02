@@ -1,17 +1,26 @@
 package com.iafenvoy.sop.util;
 
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class SopMath {
     public static Vec3d getRotationVector(float pitch, float yaw) {
-        float f = pitch * 0.017453292F;
-        float g = -yaw * 0.017453292F;
-        float h = MathHelper.cos(g);
-        float i = MathHelper.sin(g);
-        float j = MathHelper.cos(f);
-        float k = MathHelper.sin(f);
+        double f = Math.toRadians(pitch);
+        double g = -Math.toRadians(yaw);
+        double h = Math.cos(g);
+        double i = Math.sin(g);
+        double j = Math.cos(f);
+        double k = Math.sin(f);
         return new Vec3d(i * j, -k, h * j);
+    }
+
+    public static Vec3d getRotationXYZ(float pitch, float yaw) {
+        double p = Math.toRadians(pitch);
+        double y = Math.toRadians(yaw);
+        double h = Math.sin(p);
+        double d = Math.cos(p);
+        double xd = d * Math.cos(y);
+        double zd = d * Math.sin(y);
+        return new Vec3d(Math.atan(h / xd), y, Math.atan(h / zd));
     }
 
     public static Vec3d getRotationVectorUnit(float pitch, float yaw) {
@@ -23,7 +32,7 @@ public class SopMath {
     }
 
     public static Vec3d toUnit(Vec3d origin) {
-        return origin.multiply(1 / origin.length());
+        return origin.length() == 0 ? origin : origin.multiply(1 / origin.length());
     }
 
     public static Vec3d reverse(Vec3d origin, double distance) {

@@ -15,6 +15,14 @@
       }
     ]
   },
+  "mobilibounce": {
+    "sounds": [
+      {
+        "name": "sop:mobilibounce",
+        "stream": false
+      }
+    ]
+  },
   "mobiliflash": {
     "sounds": [
       {
@@ -27,6 +35,22 @@
     "sounds": [
       {
         "name": "sop:protepoint",
+        "stream": false
+      }
+    ]
+  },
+  "protearmor": {
+    "sounds": [
+      {
+        "name": "sop:protearmor",
+        "stream": false
+      }
+    ]
+  },
+  "protearmor_unapply": {
+    "sounds": [
+      {
+        "name": "sop:protearmor_unapply",
         "stream": false
       }
     ]

@@ -19,7 +19,7 @@ public class AggroSphereRenderer extends EntityRenderer<AggroSphereEntity> {
 
     public AggroSphereRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-        this.sphereModel = new SphereModel<>(SphereModel.createBodyLayer().createModel());
+        this.sphereModel = new SphereModel<>(SphereModel.getTexturedModelData().createModel());
     }
 
     @Override
@@ -27,13 +27,13 @@ public class AggroSphereRenderer extends EntityRenderer<AggroSphereEntity> {
         matrices.push();
         matrices.scale(0.5f, 0.5f, 0.5f);
         matrices.translate(0, -0.5, 0);
-        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(SphereModel.WHITE_TEXTURE));
+        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(RenderConstants.WHITE_TEXTURE));
         this.sphereModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1, 0, 0, 0.3f);
         matrices.pop();
     }
 
     @Override
     public Identifier getTexture(AggroSphereEntity entity) {
-        return SphereModel.WHITE_TEXTURE;
+        return RenderConstants.WHITE_TEXTURE;
     }
 }
