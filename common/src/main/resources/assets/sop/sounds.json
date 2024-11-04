@@ -15,6 +15,14 @@
       }
     ]
   },
+  "aggroshard": {
+    "sounds": [
+      {
+        "name": "sop:aggroshard",
+        "stream": false
+      }
+    ]
+  },
   "mobilibounce": {
     "sounds": [
       {

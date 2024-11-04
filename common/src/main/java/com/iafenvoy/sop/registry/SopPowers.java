@@ -3,10 +3,12 @@ package com.iafenvoy.sop.registry;
 import com.iafenvoy.neptune.event.LivingEntityEvents;
 import com.iafenvoy.neptune.object.DamageUtil;
 import com.iafenvoy.neptune.object.EntityUtil;
+import com.iafenvoy.neptune.util.RandomHelper;
 import com.iafenvoy.neptune.util.Timeout;
 import com.iafenvoy.sop.Static;
 import com.iafenvoy.sop.config.SopConfig;
 import com.iafenvoy.sop.entity.AggroDetonateEntity;
+import com.iafenvoy.sop.entity.AggroShardEntity;
 import com.iafenvoy.sop.entity.AggroSphereEntity;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerData;
@@ -19,7 +21,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -33,6 +34,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("unused")
 public final class SopPowers {
@@ -68,7 +70,7 @@ public final class SopPowers {
                 List<LivingEntity> entities = holder.getWorld().getEntitiesByClass(LivingEntity.class, new Box(player.getPos().add(range), player.getPos().subtract(range)), x -> x != player);
                 for (LivingEntity living : entities) {
                     Vec3d dir = SopMath.reverse(player.getPos().subtract(living.getPos()), r).multiply(-0.5);
-                    living.damage(DamageUtil.build(living, DamageTypes.MOB_ATTACK), SopConfig.INSTANCE.aggressium.aggroquakeDamage.getValue().floatValue());
+                    living.damage(DamageUtil.build(living, SopDamageTypes.AGGROQUAKE), SopConfig.INSTANCE.aggressium.aggroquakeDamage.getValue().floatValue());
                     living.setVelocity(dir.add(0, 0.5, 0));
                     living.velocityModified = true;
                 }
@@ -98,7 +100,7 @@ public final class SopPowers {
                     Vec3d v = player.getPos().subtract(living.getPos());
                     Vec3d dir = SopMath.reverse(v, r).multiply(SopConfig.INSTANCE.aggressium.aggrostormStrength.getValue());
                     if (v.length() <= r / 2)
-                        living.damage(DamageUtil.build(living, DamageTypes.MOB_ATTACK), SopConfig.INSTANCE.aggressium.aggrostormDamage.getValue().floatValue() / 20);
+                        living.damage(DamageUtil.build(living, SopDamageTypes.AGGROSTORM), SopConfig.INSTANCE.aggressium.aggrostormDamage.getValue().floatValue() / 20);
                     living.setVelocity(dir);
                     living.velocityModified = true;
                 }
@@ -112,12 +114,36 @@ public final class SopPowers {
                 PlayerEntity player = holder.getPlayer();
                 AggroDetonateEntity aggroDetonate = SopEntities.AGGRO_DETONATE.get().create(world);
                 if (aggroDetonate != null) {
-                    final Vec3d dir = SopMath.getRotationVectorUnit(player.getPitch(), player.getHeadYaw());
+                    Vec3d dir = SopMath.getRotationVectorUnit(player.getPitch(), player.getHeadYaw());
                     aggroDetonate.refreshPositionAndAngles(player.getX(), player.getY() + 1, player.getZ(), 0, 0);
-                    aggroDetonate.setPersistAngle(player.headYaw, player.getPitch());
                     aggroDetonate.setVelocity(dir.multiply(SopConfig.INSTANCE.aggressium.aggrodetonateSpeed.getValue()));
                     holder.processProjectile(aggroDetonate);
                     world.spawnEntity(aggroDetonate);
+                }
+            });
+    public static final DelaySongPower AGGROSHARD = new DelaySongPower("aggroshard", PowerCategory.AGGRESSIUM)
+            .setApplySound(SopSounds.AGGROSHARD)
+            .setDelay(12)
+            .setPrimaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggroshardPrimaryCooldown.getValue())
+            .setSecondaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggroshardSecondaryCooldown.getValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggroshardExhaustion.getValue())
+            .onApply(holder -> {
+                World world = holder.getWorld();
+                PlayerEntity player = holder.getPlayer();
+                Random random = new Random();
+                double speed = SopConfig.INSTANCE.aggressium.aggroshardSpeed.getValue();
+                Vec3d dir = SopMath.getRotationVectorUnit(player.getPitch(), player.getHeadYaw());
+                for (int i = 0; i < SopConfig.INSTANCE.aggressium.aggroshardCount.getValue(); i++) {
+                    Timeout.create(random.nextInt(25), () -> {
+                        AggroShardEntity aggroShard = SopEntities.AGGRO_SHARD.get().create(world);
+                        if (aggroShard != null) {
+                            aggroShard.refreshPositionAndAngles(player.getX(), player.getY() + 1, player.getZ(), 0, 0);
+                            final double MUL = 0.2;
+                            aggroShard.setVelocity(dir.multiply(speed).add(RandomHelper.nextDouble(-speed * MUL, speed * MUL), RandomHelper.nextDouble(-speed * MUL, speed * MUL), RandomHelper.nextDouble(-speed * MUL, speed * MUL)));
+                            holder.processProjectile(aggroShard);
+                            world.spawnEntity(aggroShard);
+                        }
+                    });
                 }
             });
     //Mobilium

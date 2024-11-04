@@ -3,6 +3,8 @@ package com.iafenvoy.sop.render;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerData;
 import com.iafenvoy.sop.registry.SopPowers;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -14,6 +16,7 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 
+@Environment(EnvType.CLIENT)
 public class ProtearmorArmorFeatureRenderer<T extends PlayerEntity, M extends PlayerEntityModel<T>, A extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
     private final A model;
 

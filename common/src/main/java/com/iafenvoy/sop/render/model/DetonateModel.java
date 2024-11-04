@@ -1,12 +1,15 @@
 package com.iafenvoy.sop.render.model;
 
-import com.iafenvoy.sop.entity.AggroDetonateEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 
-public class DetonateModel<T extends AggroDetonateEntity> extends EntityModel<T> {
+@Environment(EnvType.CLIENT)
+public class DetonateModel<T extends Entity> extends EntityModel<T> {
     private final ModelPart detonate;
 
     public DetonateModel(ModelPart root) {
@@ -16,7 +19,7 @@ public class DetonateModel<T extends AggroDetonateEntity> extends EntityModel<T>
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
-        modelPartData.addChild("detonate", ModelPartBuilder.create().uv(0, 0).cuboid(-4F, -0.5F, -0.5F, 8F, 1F, 1F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+        modelPartData.addChild("detonate", ModelPartBuilder.create().uv(0, 0).cuboid(-4F, -0.5F, -0.5F, 8F, 1F, 1F, new Dilation(0.0F)), ModelTransform.NONE);
         return TexturedModelData.of(modelData, 16, 16);
     }
 

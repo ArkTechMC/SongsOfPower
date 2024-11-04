@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "sop:aggrodetonate",
+    "sop:aggroquake",
+    "sop:aggroshard",
+    "sop:aggrosphere",
+    "sop:aggrostorm"
+  ]
+}

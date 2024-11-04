@@ -44,11 +44,18 @@ public class SopConfig extends AutoInitConfigContainer {
         public final IConfigEntry<Double> aggrostormRange = new DoubleEntry("config.sop.power.aggrostorm.range", 15, 0, Integer.MAX_VALUE).json("aggrostorm.range");
         public final IConfigEntry<Double> aggrostormDamage = new DoubleEntry("config.sop.power.aggrostorm.damage", 1, 0, Integer.MAX_VALUE).json("aggrostorm.damage");
         public final SeparatorEntry s4 = new SeparatorEntry();
-        public final IConfigEntry<Integer> aggrodetonatePrimaryCooldown = new IntegerEntry("config.sop.power.aggrodetonate.cooldown.primary", 10, 0, Integer.MAX_VALUE).json("aggrodetonate.cooldown.primary");
-        public final IConfigEntry<Integer> aggrodetonateSecondaryCooldown = new IntegerEntry("config.sop.power.aggrodetonate.cooldown.secondary", 10, 0, Integer.MAX_VALUE).json("aggrodetonate.cooldown.secondary");
+        public final IConfigEntry<Integer> aggrodetonatePrimaryCooldown = new IntegerEntry("config.sop.power.aggrodetonate.cooldown.primary", 30, 0, Integer.MAX_VALUE).json("aggrodetonate.cooldown.primary");
+        public final IConfigEntry<Integer> aggrodetonateSecondaryCooldown = new IntegerEntry("config.sop.power.aggrodetonate.cooldown.secondary", 50, 0, Integer.MAX_VALUE).json("aggrodetonate.cooldown.secondary");
         public final IConfigEntry<Double> aggrodetonateExhaustion = new DoubleEntry("config.sop.power.aggrodetonate.exhaustion", 2, 0, Integer.MAX_VALUE).json("aggrodetonate.exhaustion");
-        public final IConfigEntry<Double> aggrodetonatePower = new DoubleEntry("config.sop.power.aggrodetonate.power", 4, 0, Integer.MAX_VALUE).json("aggrodetonate.power");
+        public final IConfigEntry<Double> aggrodetonatePower = new DoubleEntry("config.sop.power.aggrodetonate.power", 1, 0, Integer.MAX_VALUE).json("aggrodetonate.power");
         public final IConfigEntry<Double> aggrodetonateSpeed = new DoubleEntry("config.sop.power.aggrodetonate.speed", 2, 0, Integer.MAX_VALUE).json("aggrodetonate.speed");
+        public final SeparatorEntry s5 = new SeparatorEntry();
+        public final IConfigEntry<Integer> aggroshardPrimaryCooldown = new IntegerEntry("config.sop.power.aggroshard.cooldown.primary", 60, 0, Integer.MAX_VALUE).json("aggroshard.cooldown.primary");
+        public final IConfigEntry<Integer> aggroshardSecondaryCooldown = new IntegerEntry("config.sop.power.aggroshard.cooldown.secondary", 100, 0, Integer.MAX_VALUE).json("aggroshard.cooldown.secondary");
+        public final IConfigEntry<Double> aggroshardExhaustion = new DoubleEntry("config.sop.power.aggroshard.exhaustion", 5, 0, Integer.MAX_VALUE).json("aggroshard.exhaustion");
+        public final IConfigEntry<Double> aggroshardDamage = new DoubleEntry("config.sop.power.aggroshard.damage", 1, 0, Integer.MAX_VALUE).json("aggroshard.damage");
+        public final IConfigEntry<Double> aggroshardSpeed = new DoubleEntry("config.sop.power.aggroshard.speed", 1.5, 0, Integer.MAX_VALUE).json("aggroshard.speed");
+        public final IConfigEntry<Integer> aggroshardCount = new IntegerEntry("config.sop.power.aggroshard.count", 20, 0, Integer.MAX_VALUE).json("aggroshard.count");
 
         public AggressiumPowerConfig() {
             super("aggressium", "config.sop.category.power.aggressium");

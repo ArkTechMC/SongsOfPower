@@ -2,6 +2,8 @@ package com.iafenvoy.sop.render.block;
 
 import com.iafenvoy.sop.item.block.entity.*;
 import com.iafenvoy.sop.registry.SopBlocks;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -9,6 +11,7 @@ import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 
+@Environment(EnvType.CLIENT)
 public abstract class SongCubeBlockEntityRenderer<T extends AbstractSongCubeBlockEntity> implements BlockEntityRenderer<T> {
     protected BlockEntityRendererFactory.Context ctx;
 

@@ -27,7 +27,7 @@ public class AggroSphereRenderer extends EntityRenderer<AggroSphereEntity> {
         matrices.push();
         matrices.scale(0.5f, 0.5f, 0.5f);
         matrices.translate(0, -0.5, 0);
-        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(RenderConstants.WHITE_TEXTURE));
+        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(this.getTexture(entity)));
         this.sphereModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1, 0, 0, 0.3f);
         matrices.pop();
     }
