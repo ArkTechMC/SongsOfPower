@@ -61,6 +61,11 @@
   "config.sop.power.proteheal.exhaustion": "Proteheal Exhaustion",
   "config.sop.power.protepoint.exhaustion": "Protepoint Exhaustion",
   "config.sop.power.protesphere.exhaustion": "Protesphere Exhaustion",
+  "config.sop.power.supporekesis.control_self": "Supporekesis Control Self Projectile",
+  "config.sop.power.supporekesis.cooldown.primary": "Supporekesis Primary Cooldown",
+  "config.sop.power.supporekesis.cooldown.secondary": "Supporekesis Secondary Cooldown",
+  "config.sop.power.supporekesis.exhaustion": "Supporekesis Exhaustion",
+  "config.sop.power.supporekesis.range": "Supporekesis Range",
   "config.sop.power.supporolift.cooldown.primary": "Supporolift Primary Cooldown",
   "config.sop.power.supporolift.cooldown.secondary": "Supporolift Secondary Cooldown",
   "config.sop.power.supporolift.exhaustion": "Supporolift Exhaustion",
@@ -102,5 +107,6 @@
   "power.sop.proteheal": "Proteheal",
   "power.sop.protepoint": "Protepoint",
   "power.sop.protesphere": "Protesphere",
+  "power.sop.supporekesis": "Supporekesis",
   "power.sop.supporolift": "Supporolift"
 }

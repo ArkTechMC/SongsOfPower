@@ -4,6 +4,7 @@ import com.iafenvoy.neptune.util.RandomHelper;
 import com.iafenvoy.sop.entity.SopProjectileEntity;
 import com.iafenvoy.sop.registry.SopGameRules;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.SwordItem;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.Vec3d;
@@ -38,12 +39,12 @@ public class SongPowerDataHolder {
             PlayerEntity player = this.getPlayer();
             Vec3d velocity = follow ? player.getVelocity() : Vec3d.ZERO;
             this.getWorld().addParticle(effect,
-                    RandomHelper.rangeRand(player.getX(),0.5),
-                    RandomHelper.rangeRand(player.getY(),0.5),
-                    RandomHelper.rangeRand(player.getZ(),0.5),
-                    RandomHelper.rangeRand(velocity.x,0.1),
-                    RandomHelper.rangeRand(velocity.y,0.1),
-                    RandomHelper.rangeRand(velocity.z,0.1));
+                    RandomHelper.rangeRand(player.getX(), 0.5),
+                    RandomHelper.rangeRand(player.getY(), 0.5),
+                    RandomHelper.rangeRand(player.getZ(), 0.5),
+                    RandomHelper.rangeRand(velocity.x, 0.1),
+                    RandomHelper.rangeRand(velocity.y, 0.1),
+                    RandomHelper.rangeRand(velocity.z, 0.1));
         }
     }
 
@@ -52,7 +53,10 @@ public class SongPowerDataHolder {
     }
 
     public void processProjectile(SopProjectileEntity projectile) {
-        projectile.setOwner(this.getPlayer());
+        PlayerEntity player = this.getPlayer();
+        projectile.setOwner(player);
+        projectile.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
+        projectile.refreshPositionAndAngles(player.getX(), player.getY() + 1, player.getZ(), 0, 0);
         if (this.usingWeapon()) projectile.setCritical();
     }
 

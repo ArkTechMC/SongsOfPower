@@ -6,12 +6,10 @@ import com.iafenvoy.sop.registry.SopDamageTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
-public class AggroShardEntity extends SopProjectileEntity implements SupporekesisControllable {
+public class AggroShardEntity extends SopProjectileEntity {
     public AggroShardEntity(EntityType<? extends SopProjectileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -23,12 +21,9 @@ public class AggroShardEntity extends SopProjectileEntity implements Supporekesi
         if (target != null) {
             target.damage(DamageUtil.build(this.ownerOrSelf(), SopDamageTypes.AGGROSHARD), SopConfig.INSTANCE.aggressium.aggroshardDamage.getValue().floatValue());
             this.remove(RemovalReason.DISCARDED);
-        } else if (this.isOnGround() || this.inGround || !this.getEntityWorld().getBlockState(this.getBlockPos()).isAir())
+        } else if (!this.getEntityWorld().getBlockState(this.getBlockPos()).isAir() && this.getDisappearCd() < 0)
+            this.setDisappearCd(20, false);
+        else if (this.isOnGround() || this.inGround)
             this.remove(RemovalReason.DISCARDED);
-    }
-
-    @Override
-    protected ItemStack asItemStack() {
-        return new ItemStack(Items.FIRE_CHARGE);
     }
 }

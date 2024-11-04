@@ -40,6 +40,8 @@ If everything is correct, the song cube will start spawning particles. After an 
 - Aggroquake: Push entities around you away and damage them.
 - Aggroshock **(Experimental)**: Generate lightnings.
 - Aggrostorm **(Experimental)**: Pull entities to you.
+- Aggrodetonate: Fire an explosive short laser.
+- Aggroshard: Fire a lot of shards.
 
 ### Mobilium
 
@@ -64,6 +66,7 @@ If everything is correct, the song cube will start spawning particles. After an 
 **HotKey: N**
 
 - Supporolift: Pull an entity you are looking at in 20 blocks.
+- Supporekesis: Stop all entities related to aggressium songs in 20 blocks and explode them. (No damage)
 
 ## My other works
 

@@ -1,6 +1,7 @@
 package com.iafenvoy.sop.config;
 
 import com.iafenvoy.jupiter.config.container.AutoInitConfigContainer;
+import com.iafenvoy.jupiter.config.entry.BooleanEntry;
 import com.iafenvoy.jupiter.config.entry.DoubleEntry;
 import com.iafenvoy.jupiter.config.entry.IntegerEntry;
 import com.iafenvoy.jupiter.config.entry.SeparatorEntry;
@@ -103,11 +104,18 @@ public class SopConfig extends AutoInitConfigContainer {
         }
     }
 
+    @SuppressWarnings("unused")
     public static class SupporiumPowerConfig extends AutoInitConfigCategoryBase {
         public final IConfigEntry<Integer> supporoliftPrimaryCooldown = new IntegerEntry("config.sop.power.supporolift.cooldown.primary", 100, 0, Integer.MAX_VALUE).json("supporolift.cooldown.primary");
         public final IConfigEntry<Integer> supporoliftSecondaryCooldown = new IntegerEntry("config.sop.power.supporolift.cooldown.secondary", 200, 0, Integer.MAX_VALUE).json("supporolift.cooldown.secondary");
         public final IConfigEntry<Double> supporoliftExhaustion = new DoubleEntry("config.sop.power.supporolift.exhaustion", 2, 0, Integer.MAX_VALUE).json("supporolift.exhaustion");
         public final IConfigEntry<Double> supporoliftRange = new DoubleEntry("config.sop.power.supporolift.range", 20, 0, 16 * 16).json("supporolift.range");
+        public final SeparatorEntry s1 = new SeparatorEntry();
+        public final IConfigEntry<Integer> supporekesisPrimaryCooldown = new IntegerEntry("config.sop.power.supporekesis.cooldown.primary", 50, 0, Integer.MAX_VALUE).json("supporekesis.cooldown.primary");
+        public final IConfigEntry<Integer> supporekesisSecondaryCooldown = new IntegerEntry("config.sop.power.supporekesis.cooldown.secondary", 150, 0, Integer.MAX_VALUE).json("supporekesis.cooldown.secondary");
+        public final IConfigEntry<Double> supporekesisExhaustion = new DoubleEntry("config.sop.power.supporekesis.exhaustion", 2, 0, Integer.MAX_VALUE).json("supporekesis.exhaustion");
+        public final IConfigEntry<Double> supporekesisRange = new DoubleEntry("config.sop.power.supporekesis.range", 20, 0, 16 * 16).json("supporekesis.range");
+        public final IConfigEntry<Boolean> supporekesisControlSelf = new BooleanEntry("config.sop.power.supporekesis.control_self", false).json("supporekesis.control_self");
 
         public SupporiumPowerConfig() {
             super("supportium", "config.sop.category.power.supportium");

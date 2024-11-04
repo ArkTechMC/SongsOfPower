@@ -8,13 +8,11 @@ import com.iafenvoy.sop.world.FakeExplosionBehavior;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
-public class AggroSphereEntity extends SopProjectileEntity implements SupporekesisControllable {
+public class AggroSphereEntity extends SopProjectileEntity {
     public AggroSphereEntity(EntityType<? extends AggroSphereEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -39,10 +37,5 @@ public class AggroSphereEntity extends SopProjectileEntity implements Supporekes
                     this.getVelocity().getX(),
                     this.getVelocity().getY(),
                     this.getVelocity().getZ());
-    }
-
-    @Override
-    protected ItemStack asItemStack() {
-        return new ItemStack(Items.FIRE_CHARGE);
     }
 }
