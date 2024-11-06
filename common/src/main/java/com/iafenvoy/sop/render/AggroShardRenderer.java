@@ -29,7 +29,7 @@ public class AggroShardRenderer extends EntityRenderer<AggroShardEntity> {
         matrices.push();
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(MathHelper.lerp(tickDelta, entity.prevYaw, entity.getYaw()) - 90.0F));
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(tickDelta, entity.prevPitch, entity.getPitch())));
-        matrices.translate(-0.1, 0, 0);
+        matrices.translate(0, 0.1, 0);
         VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(this.getTexture(entity)));
         this.shardModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1, 0, 0, 0.5f);
         matrices.pop();

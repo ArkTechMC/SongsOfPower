@@ -78,6 +78,11 @@ public class SopConfig extends AutoInitConfigContainer {
         public final IConfigEntry<Integer> mobilibounceSecondaryCooldown = new IntegerEntry("config.sop.power.mobilibounce.cooldown.secondary", 50, 0, Integer.MAX_VALUE).json("mobilibounce.cooldown.secondary");
         public final IConfigEntry<Double> mobilibounceExhaustion = new DoubleEntry("config.sop.power.mobilibounce.exhaustion", 0.5, 0, Integer.MAX_VALUE).json("mobilibounce.exhaustion");
         public final IConfigEntry<Integer> mobilibounceExistTime = new IntegerEntry("config.sop.power.mobilibounce.exist_time", 5, 0, Integer.MAX_VALUE).json("mobilibounce.exist_time");
+        public final SeparatorEntry s4 = new SeparatorEntry();
+        public final IConfigEntry<Integer> mobiliburstPrimaryCooldown = new IntegerEntry("config.sop.power.mobiliburst.cooldown.primary", 40, 0, Integer.MAX_VALUE).json("mobiliburst.cooldown.primary");
+        public final IConfigEntry<Integer> mobiliburstSecondaryCooldown = new IntegerEntry("config.sop.power.mobiliburst.cooldown.secondary", 80, 0, Integer.MAX_VALUE).json("mobiliburst.cooldown.secondary");
+        public final IConfigEntry<Double> mobiliburstExhaustion = new DoubleEntry("config.sop.power.mobiliburst.exhaustion", 4, 0, Integer.MAX_VALUE).json("mobiliburst.exhaustion");
+        public final IConfigEntry<Double> mobiliburstSpeed = new DoubleEntry("config.sop.power.mobiliburst.speed", 8, 0, 50).json("mobiliburst.speed");
 
         public MobiliumPowerConfig() {
             super("mobilium", "config.sop.category.power.mobilium");

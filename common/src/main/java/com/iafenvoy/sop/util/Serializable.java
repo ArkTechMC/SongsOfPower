@@ -3,9 +3,19 @@ package com.iafenvoy.sop.util;
 import net.minecraft.nbt.NbtCompound;
 
 public interface Serializable {
-    void encode(NbtCompound tag);
+    Serializable EMPTY = new Serializable() {
+        @Override
+        public void encode(NbtCompound nbt) {
+        }
 
-    void decode(NbtCompound tag);
+        @Override
+        public void decode(NbtCompound nbt) {
+        }
+    };
+
+    void encode(NbtCompound nbt);
+
+    void decode(NbtCompound nbt);
 
     default NbtCompound encode() {
         NbtCompound compound = new NbtCompound();

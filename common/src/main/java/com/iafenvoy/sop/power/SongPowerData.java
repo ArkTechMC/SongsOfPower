@@ -1,6 +1,5 @@
 package com.iafenvoy.sop.power;
 
-import com.iafenvoy.sop.SongsOfPower;
 import com.iafenvoy.sop.impl.ComponentManager;
 import com.iafenvoy.sop.item.block.AbstractSongCubeBlock;
 import com.iafenvoy.sop.power.type.AbstractSongPower;
@@ -13,53 +12,58 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SongPowerData implements Serializable, Tickable {
     private final PlayerEntity player;
     private boolean enabled = false;
+    private final Map<String, Serializable> components = new ConcurrentHashMap<>();
     private final Map<PowerCategory, SinglePowerData> byType = new HashMap<>();
-    private final SinglePowerData aggressium = new SinglePowerData(this, PowerCategory.AGGRESSIUM);
-    private final SinglePowerData mobilium = new SinglePowerData(this, PowerCategory.MOBILIUM);
-    private final SinglePowerData protisium = new SinglePowerData(this, PowerCategory.PROTISIUM);
-    private final SinglePowerData supportium = new SinglePowerData(this, PowerCategory.SUPPORTIUM);
-    private final Map<String, ItemStack> itemCache = new HashMap<>();
+    private final SinglePowerData aggressium = this.createSingle(this, PowerCategory.AGGRESSIUM);
+    private final SinglePowerData mobilium = this.createSingle(this, PowerCategory.MOBILIUM);
+    private final SinglePowerData protisium = this.createSingle(this, PowerCategory.PROTISIUM);
+    private final SinglePowerData supportium = this.createSingle(this, PowerCategory.SUPPORTIUM);
     private boolean dirty = false;
 
     public SongPowerData(PlayerEntity player) {
         this.player = player;
     }
 
-    @Override
-    public void encode(NbtCompound tag) {
-        tag.putBoolean("enabled", this.enabled);
-        tag.put("aggressium", this.aggressium.encode());
-        tag.put("mobilium", this.mobilium.encode());
-        tag.put("protisium", this.protisium.encode());
-        tag.put("supportium", this.supportium.encode());
+    protected SinglePowerData createSingle(SongPowerData parent, PowerCategory type) {
+        SinglePowerData data = new SinglePowerData(parent, type);
+        this.components.put(type.getId(), data);
+        this.byType.put(type, data);
+        return data;
     }
 
     @Override
-    public void decode(NbtCompound tag) {
-        this.enabled = tag.getBoolean("enabled");
-        this.aggressium.decode(tag.getCompound("aggressium"));
-        this.mobilium.decode(tag.getCompound("mobilium"));
-        this.protisium.decode(tag.getCompound("protisium"));
-        this.supportium.decode(tag.getCompound("supportium"));
+    public void encode(NbtCompound nbt) {
+        nbt.putBoolean("enabled", this.enabled);
+        for (Map.Entry<String, Serializable> entry : this.components.entrySet())
+            nbt.put(entry.getKey(), entry.getValue().encode());
+    }
+
+    @Override
+    public void decode(NbtCompound nbt) {
+        this.enabled = nbt.getBoolean("enabled");
+        for (Map.Entry<String, Serializable> entry : this.components.entrySet())
+            if (nbt.contains(entry.getKey(), NbtElement.COMPOUND_TYPE))
+                entry.getValue().decode(nbt.getCompound(entry.getKey()));
     }
 
     @Override
     public void tick() {
         if (this.player.getEntityWorld() instanceof ServerWorld serverWorld) {
-            this.aggressium.tick();
-            this.mobilium.tick();
-            this.protisium.tick();
-            this.supportium.tick();
+            for (Map.Entry<String, Serializable> entry : this.components.entrySet())
+                if (entry.getValue() instanceof Tickable tickable)
+                    tickable.tick();
             PowerMergeHelper.run(this, this.player, serverWorld);
         }
     }
@@ -102,20 +106,25 @@ public class SongPowerData implements Serializable, Tickable {
         return this.byType.get(category);
     }
 
+    public void addComponent(String id, Serializable serializable) {
+        this.components.put(id, serializable);
+    }
+
+    public Serializable getComponent(String id) {
+        return this.components.getOrDefault(id, Serializable.EMPTY);
+    }
+
+    public void removeComponent(String id) {
+        this.components.remove(id);
+    }
+
     public boolean powerEnabled(PowerCategory category, AbstractSongPower<?> power) {
         SinglePowerData data = this.get(category);
         return data.hasPower() && data.getActivePower() == power && data.isEnabled();
     }
 
-    public Map<String, ItemStack> getItemCache() {
-        return this.itemCache;
-    }
-
     public void disableAllPower() {
-        this.aggressium.disable();
-        this.mobilium.disable();
-        this.protisium.disable();
-        this.supportium.disable();
+        this.byType.values().forEach(SinglePowerData::disable);
     }
 
     public static SongPowerData byPlayer(PlayerEntity player) {
@@ -126,8 +135,6 @@ public class SongPowerData implements Serializable, Tickable {
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
             SongPowerData data = byPlayer(player);
             data.disableAllPower();
-            if (!data.itemCache.isEmpty())
-                SongsOfPower.LOGGER.warn("Item cache on player {} still have {} item(s) left!", player.getGameProfile().getName(), data.itemCache.size());
         }
     }
 
@@ -142,23 +149,22 @@ public class SongPowerData implements Serializable, Tickable {
         public SinglePowerData(SongPowerData parent, PowerCategory type) {
             this.parent = parent;
             this.type = type;
-            this.parent.byType.put(type, this);
         }
 
         @Override
-        public void encode(NbtCompound tag) {
-            tag.putBoolean("enabled", this.enabled);
-            tag.putInt("primaryCooldown", this.primaryCooldown);
-            tag.putInt("secondaryCooldown", this.secondaryCooldown);
-            tag.putString("activePower", this.activePower.getId());
+        public void encode(NbtCompound nbt) {
+            nbt.putBoolean("enabled", this.enabled);
+            nbt.putInt("primaryCooldown", this.primaryCooldown);
+            nbt.putInt("secondaryCooldown", this.secondaryCooldown);
+            nbt.putString("activePower", this.activePower.getId());
         }
 
         @Override
-        public void decode(NbtCompound tag) {
-            this.enabled = tag.getBoolean("enabled");
-            this.primaryCooldown = tag.getInt("primaryCooldown");
-            this.secondaryCooldown = tag.getInt("secondaryCooldown");
-            this.activePower = AbstractSongPower.BY_ID.getOrDefault(tag.getString("activePower"), DummySongPower.EMPTY);
+        public void decode(NbtCompound nbt) {
+            this.enabled = nbt.getBoolean("enabled");
+            this.primaryCooldown = nbt.getInt("primaryCooldown");
+            this.secondaryCooldown = nbt.getInt("secondaryCooldown");
+            this.activePower = AbstractSongPower.BY_ID.getOrDefault(nbt.getString("activePower"), DummySongPower.EMPTY);
         }
 
         @Override

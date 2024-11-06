@@ -23,6 +23,14 @@
       }
     ]
   },
+  "aggrodetonate": {
+    "sounds": [
+      {
+        "name": "sop:aggrodetonate",
+        "stream": false
+      }
+    ]
+  },
   "mobilibounce": {
     "sounds": [
       {

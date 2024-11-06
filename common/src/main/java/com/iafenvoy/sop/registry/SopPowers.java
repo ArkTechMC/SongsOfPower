@@ -13,6 +13,7 @@ import com.iafenvoy.sop.entity.AggroSphereEntity;
 import com.iafenvoy.sop.entity.SupporekesisControllable;
 import com.iafenvoy.sop.power.PowerCategory;
 import com.iafenvoy.sop.power.SongPowerData;
+import com.iafenvoy.sop.power.component.MobiliBurstComponent;
 import com.iafenvoy.sop.power.type.*;
 import com.iafenvoy.sop.util.SopMath;
 import com.iafenvoy.sop.util.WorldUtil;
@@ -108,7 +109,9 @@ public final class SopPowers {
                     living.velocityModified = true;
                 }
             });
-    public static final InstantSongPower AGGRODETONATE = new InstantSongPower("aggrodetonate", PowerCategory.AGGRESSIUM)
+    public static final DelaySongPower AGGRODETONATE = new DelaySongPower("aggrodetonate", PowerCategory.AGGRESSIUM)
+            .setApplySound(SopSounds.AGGRODETONATE)
+            .setDelay(12)
             .setPrimaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggrodetonatePrimaryCooldown.getValue())
             .setSecondaryCooldown(holder -> SopConfig.INSTANCE.aggressium.aggrodetonateSecondaryCooldown.getValue())
             .setExhaustion(holder -> SopConfig.INSTANCE.aggressium.aggrodetonateExhaustion.getValue())
@@ -197,6 +200,21 @@ public final class SopPowers {
                 player.setVelocity(0, 0, 0);
                 player.velocityModified = true;
                 Timeout.create(20 * SopConfig.INSTANCE.mobilium.mobilibounceExistTime.getValue(), () -> world.setBlockState(below, state, 2, 0));
+            });
+    public static final InstantSongPower MOBILIBURST = new InstantSongPower("mobiliburst", PowerCategory.MOBILIUM)
+            .setPrimaryCooldown(holder -> SopConfig.INSTANCE.mobilium.mobiliburstPrimaryCooldown.getValue())
+            .setSecondaryCooldown(holder -> SopConfig.INSTANCE.mobilium.mobiliburstSecondaryCooldown.getValue())
+            .setExhaustion(holder -> SopConfig.INSTANCE.mobilium.mobiliburstExhaustion.getValue())
+            .onApply(holder -> {
+                World world = holder.getWorld();
+                PlayerEntity player = holder.getPlayer();
+                final Vec3d dir = SopMath.getRotationVectorUnit(MathHelper.clamp(player.getPitch(), -15, 15), player.getHeadYaw());
+                player.setVelocity(dir.multiply(SopConfig.INSTANCE.mobilium.mobiliburstSpeed.getValue()));
+                player.velocityModified = true;
+                MobiliBurstComponent component = new MobiliBurstComponent(player);
+                component.setActivate(true);
+                component.setMaxTick(SopConfig.INSTANCE.mobilium.mobiliburstPrimaryCooldown.getValue() + 20);
+                SongPowerData.byPlayer(player).addComponent(Static.MOBILIBURST, component);
             });
     //Protisium
     public static final PersistSongPower PROTESPHERE = new PersistSongPower("protesphere", PowerCategory.PROTISIUM)

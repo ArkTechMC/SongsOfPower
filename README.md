@@ -47,10 +47,11 @@ If everything is correct, the song cube will start spawning particles. After an 
 
 **HotKey: V**
 
-- Mobiliflash: Teleport to the direction you see, has a delay of 10 ticks.
+- Mobiliflash: Teleport to the direction you see.
 - Mobiliwings: Enable a fake elytra and into sliding mode.
 - Mobiliglide: Slow falling.
 - Mobilibounce: Generate a fake platform and disappear in 5s. You can jump 3x higher on it.
+- Mobiliburst: Teleport to the direction you see, also pull every entity on your way away.
 
 ### Protisium
 
@@ -70,11 +71,11 @@ If everything is correct, the song cube will start spawning particles. After an 
 
 ## My other works
 
-- **Songs of War**: SoW Main
-  Mod [Curseforge](https://www.curseforge.com/minecraft/mc-mods/songs-of-war) | [Modrinth](https://modrinth.com/mod/songs-of-war)
-- **Songs of Origins**: SoW x
-  Origins [Curseforge](https://www.curseforge.com/minecraft/mc-mods/songs-of-origins) | [Modrinth](https://modrinth.com/mod/songs-of-origins)
-- *Songs of Power*: Song
-  abilities [Curseforge](https://www.curseforge.com/minecraft/mc-mods/songs-of-power) | [Modrinth](https://modrinth.com/mod/songs-of-power)
-- **Songs of War RPG**: SoW RPG
-  Modpack [Curseforge](https://www.curseforge.com/minecraft/modpacks/songs-of-war-rpg) | [Modrinth](https://modrinth.com/modpack/songs-of-war-rpg)
+- **Songs of War**: SoW Main Mod
+  [Curseforge](https://www.curseforge.com/minecraft/mc-mods/songs-of-war) | [Modrinth](https://modrinth.com/mod/songs-of-war)
+- **Songs of Origins**: SoW x Origins
+  [Curseforge](https://www.curseforge.com/minecraft/mc-mods/songs-of-origins) | [Modrinth](https://modrinth.com/mod/songs-of-origins)
+- *Songs of Power*: Song abilities
+  [Curseforge](https://www.curseforge.com/minecraft/mc-mods/songs-of-power) | [Modrinth](https://modrinth.com/mod/songs-of-power)
+- **Songs of War RPG**: SoW RPG Modpack
+  [Curseforge](https://www.curseforge.com/minecraft/modpacks/songs-of-war-rpg) | [Modrinth](https://modrinth.com/modpack/songs-of-war-rpg)

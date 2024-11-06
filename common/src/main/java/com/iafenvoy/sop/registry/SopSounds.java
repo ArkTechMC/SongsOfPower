@@ -13,6 +13,7 @@ public final class SopSounds {
     public static final RegistrySupplier<SoundEvent> AGGROQUAKE = register("aggroquake");
     public static final RegistrySupplier<SoundEvent> AGGROSPHERE = register("aggrosphere");
     public static final RegistrySupplier<SoundEvent> AGGROSHARD = register("aggroshard");
+    public static final RegistrySupplier<SoundEvent> AGGRODETONATE = register("aggrodetonate");
     public static final RegistrySupplier<SoundEvent> MOBILIBOUNCE = register("mobilibounce");
     public static final RegistrySupplier<SoundEvent> MOBILIFLASH = register("mobiliflash");
     public static final RegistrySupplier<SoundEvent> PROTEPOINT = register("protepoint");
