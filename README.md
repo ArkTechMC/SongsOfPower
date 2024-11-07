@@ -1,5 +1,9 @@
 # Songs of Power
 
+**This mod has been merged with Songs of
+War ([Curseforge](https://www.curseforge.com/minecraft/mc-mods/songs-of-war) | [Modrinth](https://modrinth.com/mod/songs-of-war)),
+later update will not receive.**
+
 This mod add song abilities from Songs of War Animation.
 
 **Note: This mod is still under construction!**

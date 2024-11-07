@@ -28,7 +28,6 @@ public class SongsOfPower {
         SopParticles.REGISTRY.register();
         SopSounds.REGISTRY.register();
         SopCommands.init();
-        SopGameRules.init();
         SopItems.init();
         SopBlocks.init();
         SopPowers.init();
